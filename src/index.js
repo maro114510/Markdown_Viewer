@@ -1,5 +1,5 @@
-const { app, BrowserWindow } = require('electron')
-const { ensureDir } = require('fs-extra')
+const { app, BrowserWindow } = require( 'electron' )
+const { ensureDir } = require( 'fs-extra' )
 
 function createWindow() {
 	const win = new BrowserWindow({
@@ -16,15 +16,15 @@ function createWindow() {
 app.whenReady().then(() => {
 	createWindow()
 
-	app.on('activate', () => {
-		if (BrowserWindow.getAllWindows().length === 0) {
+	app.on( 'activate', () => {
+		if ( BrowserWindow.getAllWindows().length === 0 ) {
 			createWindow()
 		}
 	})
 })
 
-app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
+app.on( 'window-all-closed', () => {
+	if ( process.platform !== 'darwin' ) {
 		app.quit()
 	}
 })
