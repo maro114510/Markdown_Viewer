@@ -1,27 +1,16 @@
-const { app, BrowserWindow } = require( 'electron' )
-const { ensureDir } = require( 'fs-extra' )
+const { app, dialog } = require( 'electron' )
 
-function createWindow() {
-	const win = new BrowserWindow({
-		width: 800,
-		height: 600,
-		webPreferences: {
-			nodeIntegration: true
-		}
+// Desc: Get file path from user
+const { getFilePath } = require( './modules/get_filepath' )
+
+
+getFilePath( app, dialog )
+	.then( ( filePath ) => {
+		console.log( filePath );
 	})
-
-	win.loadFile( './html/index.html' )
-}
-
-app.whenReady().then(() => {
-	createWindow()
-
-	app.on( 'activate', () => {
-		if ( BrowserWindow.getAllWindows().length === 0 ) {
-			createWindow()
-		}
-	})
-})
+	.catch( ( error ) => {
+		console.log( error );
+	});
 
 app.on( 'window-all-closed', () => {
 	if ( process.platform !== 'darwin' ) {
