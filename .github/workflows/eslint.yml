@@ -1,4 +1,4 @@
-name: Lint
+name: Lint and Commit
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  lint:
+  lint_and_commit:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,3 +28,11 @@ jobs:
       - name: Run linter
         run: npm run lint
         working-directory: ./src
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "maro114510"
+          git config --global user.email "a.n.alex.louis.armstrong@gmail.com"
+          git add .
+          git commit -m "Linted code"
+          git push
