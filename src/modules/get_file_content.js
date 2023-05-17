@@ -1,9 +1,11 @@
 // Desc: get file content
 
-function getFileContent( filePath )
+const fs = require( 'fs' );
+
+function getFileContent( filePath, encoding )
 {
 	return new Promise( ( resolve, reject ) => {
-		fs.readFile( filePath, 'utf8', ( error, data ) => {
+		fs.readFile( filePath, encoding, ( error, data ) => {
 			if ( error ) {
 				reject( error );
 			} else {
@@ -12,3 +14,8 @@ function getFileContent( filePath )
 		});
 	});
 }
+
+module.exports = { getFileContent };
+
+
+// End of script

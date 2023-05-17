@@ -3,13 +3,15 @@ const { app, dialog } = require('electron')
 // Desc: Get file path from user
 const { getFilePath } = require('./modules/get_filepath')
 const { getFileEncoding } = require('./modules/detect_encoding')
+const { getFileContent } = require('./modules/get_file_content')
 
 // Main deal
 
 app.on('ready', async () => {
 	const filePath = await handleGetFilePath();
 	const encoding = await getFileEncoding( filePath );
-	console.log( encoding );
+	const fileContent = await getFileContent( filePath, encoding );
+	console.log( fileContent );
 });
 
 app.on('window-all-closed', () => {
