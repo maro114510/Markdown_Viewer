@@ -9,7 +9,7 @@ const { getFileContent } = require('./modules/get_file_content')
 
 app.on('ready', async () => {
 	const filePath = await handleGetFilePath();
-	const encoding = await getFileEncoding( filePath );
+	const encoding = await handleGetFileEncoding( filePath );
 	const fileContent = await getFileContent( filePath, encoding );
 	console.log( fileContent );
 });
@@ -41,6 +41,19 @@ async function handleGetFilePath()
 			}
 			counter++;
 		}
+	}
+}
+
+async function handleGetFileEncoding( filePath )
+{
+	try
+	{
+		const encoding = await getFileEncoding( filePath );
+		return encoding;
+	}
+	catch( error )
+	{
+		dialog.showErrorBox( 'Error', error.message );
 	}
 }
 
