@@ -1,22 +1,69 @@
-const { app, dialog } = require( 'electron' )
+const { app, dialog } = require('electron')
 
 // Desc: Get file path from user
-const { getFilePath } = require( './modules/get_filepath' )
+const { getFilePath } = require('./modules/get_filepath')
+const { getFileEncoding } = require('./modules/detect_encoding')
+const { getFileContent } = require('./modules/get_file_content')
 
+// Main deal
 
-getFilePath( app, dialog )
-	.then( ( filePath ) => {
-		console.log( filePath );
-	})
-	.catch( ( error ) => {
-		console.log( error );
-	});
+app.on('ready', async () => {
+	const filePath = await handleGetFilePath();
+	const encoding = await handleGetFileEncoding( filePath );
+	const fileContent = await getFileContent( filePath, encoding );
+	console.log( fileContent );
+});
 
-app.on( 'window-all-closed', () => {
-	if ( process.platform !== 'darwin' ) {
-		app.quit()
+app.on('window-all-closed', () => {
+	if (process.platform !== 'darwin') {
+		app.quit();
 	}
 })
+
+// functions
+
+async function handleGetFilePath()
+{
+	let counter = 0;
+	while (counter < 5)
+	{
+		try
+		{
+			const filePath = await getFilePath( dialog );
+			return filePath;
+		}
+		catch( error )
+		{
+			dialog.showErrorBox('Error', error.message);
+			if (counter === 4) {
+				dialog.showErrorBox('Error', 'You have exceeded the maximum number of attempts.');
+				app.quit();
+			}
+			counter++;
+		}
+	}
+}
+
+async function handleGetFileEncoding( filePath )
+{
+	try
+	{
+		const encoding = await getFileEncoding( filePath );
+		return encoding;
+	}
+	catch( error )
+	{
+		dialog.showErrorBox( 'Error', error.message );
+	}
+}
+
+// Helper functions
+
+function handleGetFilePathError( error )
+{
+	dialog.showErrorBox( 'Error', error.message );
+	app.quit();
+}
 
 
 // End of script
