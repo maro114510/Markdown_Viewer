@@ -1,0 +1,38 @@
+name: Lint and Commit
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  lint_and_commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./src
+
+      - name: Run linter
+        run: npm run lint
+        working-directory: ./src
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "maro114510"
+          git config --global user.email "a.n.alex.louis.armstrong@gmail.com"
+          git add .
+          git commit -m "Linted code"
+          git push
