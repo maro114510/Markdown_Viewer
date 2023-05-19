@@ -13,7 +13,7 @@ function parseMD( str ) {
 	}
 	catch( error )
 	{
-		throw new Error( error.message );
+		throw new Error( 'Error parsing markdown', error.message );
 	}
 }
 
