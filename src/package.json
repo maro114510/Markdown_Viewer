@@ -1,6 +1,8 @@
 {
 	"devDependencies": {
-		"electron": "^24.3.0"
+		"electron": "^24.3.0",
+		"eslint": "^8.40.0",
+		"eslint-plugin-react": "^7.32.2"
 	},
 	"name": "src",
 	"version": "1.0.0",
@@ -43,6 +45,8 @@
 		"keyv": "^4.5.2",
 		"lowercase-keys": "^2.0.0",
 		"lru-cache": "^6.0.0",
+		"marked-gfm-heading-id": "^3.0.3",
+		"marked-mangle": "^1.0.1",
 		"matcher": "^3.0.0",
 		"mimic-response": "^1.0.1",
 		"ms": "^2.1.2",
@@ -70,7 +74,8 @@
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "electron . --no-sandbox"
+		"start": "electron . --no-sandbox",
+		"lint": "eslint ."
 	},
 	"keywords": [],
 	"author": "",
