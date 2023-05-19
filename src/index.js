@@ -17,7 +17,8 @@ app.on('ready', async () => {
 });
 
 app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
+	if (process.platform !== 'darwin')
+	{
 		app.quit();
 	}
 })
@@ -27,7 +28,7 @@ app.on('window-all-closed', () => {
 async function handleGetFilePath()
 {
 	let counter = 0;
-	while (counter < 5)
+	while( counter < 5 )
 	{
 		try
 		{
@@ -37,7 +38,8 @@ async function handleGetFilePath()
 		catch( error )
 		{
 			dialog.showErrorBox('Error', error.message);
-			if (counter === 4) {
+			if( counter === 4 )
+			{
 				dialog.showErrorBox('Error', 'You have exceeded the maximum number of attempts.');
 				app.quit();
 			}
