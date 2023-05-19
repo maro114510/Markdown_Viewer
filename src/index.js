@@ -1,9 +1,10 @@
 const { app, dialog } = require('electron')
 
 // Desc: Get file path from user
-const { getFilePath } = require('./modules/get_filepath')
-const { getFileEncoding } = require('./modules/detect_encoding')
-const { getFileContent } = require('./modules/get_file_content')
+const { getFilePath } = require('./modules/get_filepath');
+const { getFileEncoding } = require('./modules/detect_encoding');
+const { getFileContent } = require('./modules/get_file_content');
+const { parseMD } = require('./modules/parse_md');
 
 // Main deal
 
@@ -11,7 +12,8 @@ app.on('ready', async () => {
 	const filePath = await handleGetFilePath();
 	const encoding = await handleGetFileEncoding( filePath );
 	const fileContent = await getFileContent( filePath, encoding );
-	console.log( fileContent );
+	const html = handleMarkdown( fileContent );
+	console.log( html );
 });
 
 app.on('window-all-closed', () => {
@@ -54,6 +56,20 @@ async function handleGetFileEncoding( filePath )
 	catch( error )
 	{
 		dialog.showErrorBox( 'Error', error.message );
+	}
+}
+
+function handleMarkdown( fileContent )
+{
+	try
+	{
+		const html = parseMD( fileContent );
+		return html;
+	}
+	catch( error )
+	{
+		dialog.showErrorBox( 'Error', error.message );
+		app.quit();
 	}
 }
 
