@@ -33,11 +33,3 @@ jobs:
       - name: Show lint results
         run: cat lint-result.txt
         if: ${{ job.status == 'failure' }}
-
-      - name: Commit changes
-        run: |
-          git config --global user.name "maro114510"
-          git config --global user.email "a.n.alex.louis.armstrong@gmail.com"
-          git add .
-          git commit -m "Linted code"
-          git push
