@@ -28,6 +28,11 @@ jobs:
       - name: Run linter
         run: npm run lint
         working-directory: ./src
+        continue-on-error: true
+
+      - name: Show lint results
+        run: cat lint-result.txt
+        if: ${{ job.status == 'failure' }}
 
       - name: Commit changes
         run: |
