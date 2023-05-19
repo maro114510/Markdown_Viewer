@@ -3,7 +3,7 @@ const { marked } = require( 'marked' );
 function parseMD( str ) {
 	try
 	{
-		htmlString = marked( str );
+		const htmlString = marked( str );
 		if( htmlString === '' )
 		{
 			htmlString = '<p>__blank__</p>';
