@@ -4,7 +4,6 @@
 const path = require( 'path' );
 const fs = require( 'fs' ).promises;
 const { getFilePath } = require( '../modules/get_filepath' );
-const { error } = require('console');
 
 // 正常系
 
