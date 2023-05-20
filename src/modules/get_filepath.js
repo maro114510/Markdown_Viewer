@@ -15,8 +15,9 @@ function getFilePath( dialog )
 			if ( !result.canceled ) {
 				const filePath = result.filePaths[0];
 
-				validateFilePath( filePath );
-				resolve( filePath );
+				validateFilePath( filePath )
+					.then( () => resolve( filePath ) )
+					.catch( error => reject( error ) );
 			}
 		})
 		.catch( error => {
@@ -38,7 +39,9 @@ async function validateFilePath( filePath )
 
 	if( !isValidFileExtension( filePath ) )
 	{
-		throw new Error( 'Invalid file extension. Only Markdown files are allowed.' );
+		throw new Error(
+			'Invalid file extension. Only Markdown files are allowed.'
+		);
 	}
 }
 
@@ -56,6 +59,11 @@ function isValidFileExtension( filePath )
 	];
 
 	const fileExtension = getFileExtension( filePath );
+
+	if( !fileExtension )
+	{
+		return false;
+	}
 
 	return validExtensions.includes( fileExtension );
 }
