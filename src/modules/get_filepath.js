@@ -1,6 +1,6 @@
 // Desc: Get file path from user
 
-const fs = require( 'fs' );
+const fs = require( 'fs' ).promises;
 
 function getFilePath( dialog )
 {
@@ -25,9 +25,13 @@ function getFilePath( dialog )
 	});
 }
 
-function validateFilePath( filePath )
+async function validateFilePath( filePath )
 {
-	if ( !fs.existsSync( filePath ) )
+	try
+	{
+		await fs.access( filePath );
+	}
+	catch( error )
 	{
 		throw new Error( 'File path does not exist' );
 	}
