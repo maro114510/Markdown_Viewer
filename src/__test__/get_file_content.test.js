@@ -24,6 +24,8 @@ describe( 'getFileContent', () => {
 		const content = await getFileContent( filePath, encoding );
 
 		expect( content ).toBe( fileContent );
+
+		fs.readFile.mockRestore();
 	});
 
 	// 異常系
