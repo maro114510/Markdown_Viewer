@@ -25,7 +25,7 @@ function getFilePath( dialog )
 	});
 }
 
-function validateFilePath(filePath)
+function validateFilePath( filePath )
 {
 	if ( !fs.existsSync( filePath ) )
 	{
@@ -56,7 +56,8 @@ function isValidFileExtension( filePath )
 	return validExtensions.includes( fileExtension );
 }
 
-function getFileExtension( filePath ) {
+function getFileExtension( filePath )
+{
 	const extIndex = filePath.lastIndexOf( '.') ;
 	return filePath.slice( extIndex ).toLowerCase();
 }
