@@ -27,7 +27,7 @@ function getFilePath( dialog )
 
 function validateFilePath( filePath )
 {
-	if( !fs.existsSync( filePath ) )
+	if ( !fs.existsSync( filePath ) )
 	{
 		throw new Error( 'File path does not exist' );
 	}
