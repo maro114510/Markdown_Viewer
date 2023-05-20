@@ -25,9 +25,9 @@ function getFilePath( dialog )
 	});
 }
 
-function validateFilePath(filePath)
+function validateFilePath( filePath )
 {
-	if ( !fs.existsSync( filePath ) )
+	if( !fs.existsSync( filePath ) )
 	{
 		throw new Error( 'File path does not exist' );
 	}
@@ -56,7 +56,8 @@ function isValidFileExtension( filePath )
 	return validExtensions.includes( fileExtension );
 }
 
-function getFileExtension( filePath ) {
+function getFileExtension( filePath )
+{
 	const extIndex = filePath.lastIndexOf( '.') ;
 	return filePath.slice( extIndex ).toLowerCase();
 }
