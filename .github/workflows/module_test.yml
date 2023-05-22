@@ -1,0 +1,37 @@
+name: Test Module
+
+on:
+  merge:
+    branches:
+      - develop
+      - main
+
+  push:
+    branches:
+      - develop
+
+jobs:
+  test_module:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./src
+
+      - name: Run tests
+        run: ./node_modules/.bin/jest
+        working-directory: ./src
+        continue-on-error: true
+
+      - name: Show test results
+        run: cat test-result.txt
+        if: ${{ job.status == 'failure' }}
