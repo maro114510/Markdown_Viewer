@@ -1,11 +1,9 @@
 name: Test Module
 
 on:
-  merge:
+  pull_request:
     branches:
       - develop
-      - main
-
   push:
     branches:
       - develop
