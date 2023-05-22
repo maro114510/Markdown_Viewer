@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - develop
+    types: [ closed ]
   push:
     branches:
       - develop
@@ -29,7 +30,15 @@ jobs:
         run: ./node_modules/.bin/jest
         working-directory: ./src
         continue-on-error: true
+        env:
+          CI: true
+
+      - name: Save test results
+        if: ${{ job.status == 'failure' }}
+        run: |
+          mkdir -p ${{ github.workspace }}/test-results
+          cp ./src/test-result.txt ${{ github.workspace }}/test-results/test-result.txt
 
       - name: Show test results
-        run: cat test-result.txt
         if: ${{ job.status == 'failure' }}
+        run: cat ${{ github.workspace }}/test-results/test-result.txt
