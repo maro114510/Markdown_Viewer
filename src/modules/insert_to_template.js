@@ -1,6 +1,6 @@
 // Desc: Insert html string to template html
+
 const fs = require( 'fs' );
-const { exec } = require( 'child_process' );
 
 function insertHTML( html )
 {
@@ -26,9 +26,7 @@ function insertHTML( html )
 	// write new html to file
 	fs.writeFileSync( outputPath, newHTML );
 
-	exec( `open ${outputPath}` );
-
-	return newHTML;
+	return outputPath;
 }
 
 
