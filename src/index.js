@@ -5,6 +5,7 @@ const { getFilePath } = require('./modules/get_filepath');
 const { getFileEncoding } = require('./modules/detect_encoding');
 const { getFileContent } = require('./modules/get_file_content');
 const { parseMD } = require('./modules/parse_md');
+const { insertHTML } = require('./modules/insert_to_template');
 
 // Main deal
 
@@ -13,7 +14,8 @@ app.on('ready', async () => {
 	const encoding = await handleGetFileEncoding( filePath );
 	const fileContent = await getFileContent( filePath, encoding );
 	const html = handleMarkdown( fileContent );
-	console.log( html );
+
+	const newHTML = handleInsertHTML( html );
 });
 
 app.on('window-all-closed', () => {
@@ -72,6 +74,19 @@ function handleMarkdown( fileContent )
 	{
 		dialog.showErrorBox( 'Error', error.message );
 		app.quit();
+	}
+}
+
+function handleInsertHTML( html )
+{
+	try
+	{
+		const newHTML = insertHTML( html );
+		return newHTML;
+	}
+	catch( error )
+	{
+		dialog.showErrorBox( 'Error', error.message );
 	}
 }
 
