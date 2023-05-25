@@ -44,7 +44,7 @@ async function handleMain()
 function createWindow( outputPath )
 {
 	let mainWindow = new BrowserWindow({
-		width: 800,
+		width: 855,
 		height: 600,
 		webPreferences: {
 			nodeIntegration: false,
