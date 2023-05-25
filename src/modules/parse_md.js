@@ -1,9 +1,11 @@
+// Desc: Parse markdown
+
 const { marked } = require( 'marked' );
 
 function parseMD( str ) {
 	try
 	{
-		htmlString = marked( str );
+		let htmlString = marked( str );
 		if( htmlString === '' )
 		{
 			htmlString = '<p>__blank__</p>';
@@ -13,10 +15,12 @@ function parseMD( str ) {
 	}
 	catch( error )
 	{
-		throw new Error( error.message );
+		throw new Error( 'Error parsing markdown', error.message );
 	}
 }
 
 module.exports = { parseMD };
+
+
 
 // End of script

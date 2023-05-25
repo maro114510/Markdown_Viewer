@@ -1,0 +1,44 @@
+name: Test Module
+
+on:
+  pull_request:
+    branches:
+      - develop
+    types: [ closed ]
+  push:
+    branches:
+      - develop
+
+jobs:
+  test_module:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./src
+
+      - name: Run tests
+        run: ./node_modules/.bin/jest
+        working-directory: ./src
+        continue-on-error: true
+        env:
+          CI: true
+
+      - name: Save test results
+        if: ${{ job.status == 'failure' }}
+        run: |
+          mkdir -p ${{ github.workspace }}/test-results
+          cp ./src/test-result.txt ${{ github.workspace }}/test-results/test-result.txt
+
+      - name: Show test results
+        if: ${{ job.status == 'failure' }}
+        run: cat ${{ github.workspace }}/test-results/test-result.txt
