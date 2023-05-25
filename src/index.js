@@ -10,18 +10,20 @@ const { insertHTML } = require( './modules/insert_to_template' );
 // Main deal
 
 app.on( 'ready', async () => {
+	// アプリの準備ができたら、メインウィンドウを表示する
 	handleMain();
 });
 
 app.on( 'window-all-closed', () => {
+	// macOSでは、ウィンドウが閉じられてもアプリケーションとして残す
 	if (process.platform !== 'darwin')
 	{
 		app.quit();
 	}
 })
 
-// ドックアイコンをクリックしたときにウィンドウを再表示する
 app.on( 'activate', () => {
+	// ドックアイコンをクリックしたときにウィンドウを再表示する
 	if( BrowserWindow.getAllWindows().length === 0 )
 	{
 		handleMain();
@@ -32,6 +34,7 @@ app.on( 'activate', () => {
 
 async function handleMain()
 {
+	// パスの取得からHTMLの挿入までの処理をまとめている
 	const filePath = await handleGetFilePath();
 	const encoding = await handleGetFileEncoding( filePath );
 	const fileContent = await getFileContent( filePath, encoding );
@@ -43,9 +46,13 @@ async function handleMain()
 
 function createWindow( outputPath )
 {
+	// A4の大きさを想定しているので、ウィンドウサイズは固定
+	const WIDTH = 855;
+	const HEIGHT = 600;
+
 	let mainWindow = new BrowserWindow({
-		width: 855,
-		height: 600,
+		width: WIDTH,
+		height: HEIGHT,
 		webPreferences: {
 			nodeIntegration: false,
 			contextIsolation: true,
@@ -54,6 +61,7 @@ function createWindow( outputPath )
 		}
 	});
 
+	// HACK: モジュールに切り出したほうがいいかもしれない
 	mainWindow.loadURL(
 		'file://' + __dirname + '/' + outputPath
 	);
@@ -66,6 +74,7 @@ function createWindow( outputPath )
 
 async function handleGetFilePath()
 {
+	// マークダウンの拡張子でないものを選択した場合、エラーを表示して再度ファイル選択を促す
 	let counter = 0;
 	while( counter < 5 )
 	{
@@ -89,6 +98,7 @@ async function handleGetFilePath()
 
 async function handleGetFileEncoding( filePath )
 {
+	// ラッピングするときにエラーをキャッチできないので、ここでエラーをキャッチする
 	try
 	{
 		const encoding = await getFileEncoding( filePath );
@@ -102,6 +112,7 @@ async function handleGetFileEncoding( filePath )
 
 function handleMarkdown( fileContent )
 {
+	// ラッピングするときにエラーをキャッチできないので、ここでエラーをキャッチする
 	try
 	{
 		const html = parseMD( fileContent );
@@ -116,6 +127,7 @@ function handleMarkdown( fileContent )
 
 function handleInsertHTML( html )
 {
+	// ラッピングするときにエラーをキャッチできないので、ここでエラーをキャッチする
 	try
 	{
 		const newHTML = insertHTML( html );
