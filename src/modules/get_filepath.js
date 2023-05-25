@@ -13,7 +13,7 @@ function getFilePath( dialog )
 		)
 		.then( result => {
 			if ( !result.canceled ) {
-				const filePath = result.filePaths[0];
+				const filePath = result.filePaths[ 0 ];
 
 				validateFilePath( filePath )
 					.then( () => resolve( filePath ) )
@@ -47,6 +47,7 @@ async function validateFilePath( filePath )
 
 function isValidFileExtension( filePath )
 {
+	// FIXME: ファイル選択ダイアログの標準フィルターを使うようにする
 	const validExtensions = [
 		'.md',
 		'.markdown',
