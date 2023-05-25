@@ -31,6 +31,7 @@ async function ExportPDF( mainWindow, dialog )
 async function selectFilePath( dialog )
 {
 	// デフォルトのパスを指定しつつ出力するファイルのフルパスを指定する
+	// 非同期にしないとオブジェクトを渡してしまう
 	return new Promise( ( resolve, reject ) => {
 		dialog
 			.showSaveDialog
