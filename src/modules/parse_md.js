@@ -1,3 +1,5 @@
+// Desc: Parse markdown
+
 const { marked } = require( 'marked' );
 
 function parseMD( str ) {
@@ -18,5 +20,7 @@ function parseMD( str ) {
 }
 
 module.exports = { parseMD };
+
+
 
 // End of script

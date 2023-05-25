@@ -175,6 +175,7 @@ dist
 # *.png
 # *.mp4
 # *.json
+*.pdf
 .vscode
 
 
