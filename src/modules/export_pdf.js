@@ -20,6 +20,7 @@ async function ExportPDF( mainWindow, dialog )
 				{
 					throw error;
 				}
+				// TODO: 成功のポップアップなどを実装
 				console.log( 'Write PDF successfully.' );
 			});
 		})
@@ -55,5 +56,7 @@ async function selectFilePath( dialog )
 
 
 module.exports = { ExportPDF };
+
+
 
 // End of script
