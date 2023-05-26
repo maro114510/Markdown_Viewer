@@ -19,6 +19,14 @@
 
 ```python
 print("hello world")
+
+def func():
+	print("hello world")
+
+class Class:
+	def __init__(self):
+		print("hello world")
+	
 ```
 
 [link](https://google.com)
@@ -32,6 +40,20 @@ print("hello world")
 - [ ] task1
 - [x] task2
 - [ ] task3
+- [ ] mm
+- [ ] task1
+- [x] task2
+- [ ] task3
+
+
+> quote
+
+```rust:main.rs
+fn main() {
+	println!("hello world");
+}
+```
+
 
 ---
 

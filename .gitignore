@@ -168,6 +168,9 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
+### project ###
+src/html/output.html
+
 
 ### others ###
 # *.jpg
