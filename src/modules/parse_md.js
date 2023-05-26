@@ -27,6 +27,8 @@ function parseMD( str )
 
 function settingHighlightOption()
 {
+	// highlight.jsが対応する言語を確認
+	// 対応する言語があればそのハイライト、そうでなければデフォルトにハイライトを使用
 	marked.setOptions({
 		highlight: function( code, lang ) {
 			let highlightedCode;
