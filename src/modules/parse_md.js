@@ -1,8 +1,8 @@
 // Desc: Parse markdown
 
 const { marked } = require( 'marked' );
-const { highlight, highlightAuto } = require('highlight.js');
-const { getLanguage } = require('highlight.js');
+const { highlight, highlightAuto } = require( 'highlight.js' );
+const { getLanguage } = require( 'highlight.js' );
 
 function parseMD( str )
 {
@@ -20,8 +20,9 @@ function parseMD( str )
 	}
 	catch( error )
 	{
-		// throw new Error( 'Error parsing markdown', error.message );
-		throw new Error( error.message );
+		throw new Error(
+			`Failed to parse markdown.\n${error.message}`
+		)
 	}
 }
 
