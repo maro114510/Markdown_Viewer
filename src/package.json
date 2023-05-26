@@ -37,6 +37,7 @@
 		"has-property-descriptors": "^1.0.0",
 		"has-proto": "^1.0.1",
 		"has-symbols": "^1.0.3",
+		"highlight.js": "^11.8.0",
 		"http-cache-semantics": "^4.1.1",
 		"http2-wrapper": "^1.0.3",
 		"jschardet": "^3.0.0",
