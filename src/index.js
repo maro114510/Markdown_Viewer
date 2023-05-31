@@ -19,10 +19,7 @@ app.on( 'ready', async () => {
 	let { filePath, outputPath } = await handleMain();
 	createWindow( outputPath );
 
-	console.log( filePath );
-
 	// ファイルの変更を監視する
-	console.log( 'Start watching file changes...' );
 	watchFileChanges(
 		BrowserWindow.getAllWindows()[0],
 		filePath,
