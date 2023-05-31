@@ -13,20 +13,23 @@ async function ExportPDF( mainWindow, dialog )
 		marginsType: 0,
 	};
 
-	mainWindow.webContents.printToPDF( options )
-		.then( data => {
-			fs.writeFile( filePath, data, error => {
-				if( error )
-				{
-					throw error;
-				}
-				// TODO: 成功のポップアップなどを実装
-				console.log( 'Write PDF successfully.' );
+	if( filePath )
+	{
+		mainWindow.webContents.printToPDF( options )
+			.then( data => {
+				fs.writeFile( filePath, data, error => {
+					if( error )
+					{
+						throw error;
+					}
+					// TODO: 成功のポップアップなどを実装
+					console.log( 'Write PDF successfully.' );
+				});
+			})
+			.catch( error => {
+				console.log( error )
 			});
-		})
-		.catch( error => {
-			console.log( error )
-		});
+	}
 }
 
 async function selectFilePath( dialog )
