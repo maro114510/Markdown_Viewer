@@ -1,3 +1,7 @@
+// Desc: Main process of the app
+
+// Modules
+const fs = require( 'fs' );
 const { app, dialog, BrowserWindow } = require('electron')
 
 // Desc: Get file path from user
@@ -12,7 +16,19 @@ const { ExportPDF } = require( './modules/export_pdf' );
 
 app.on( 'ready', async () => {
 	// アプリの準備ができたら、メインウィンドウを表示する
-	handleMain();
+	let { filePath, outputPath } = await handleMain();
+	createWindow( outputPath );
+
+	console.log( filePath );
+
+	// ファイルの変更を監視する
+	console.log( 'Start watching file changes...' );
+	watchFileChanges(
+		BrowserWindow.getAllWindows()[0],
+		filePath,
+		outputPath,
+		loadWindow
+	);
 });
 
 app.on( 'window-all-closed', () => {
@@ -44,7 +60,7 @@ async function handleMain()
 	const html = handleMarkdown( fileContent );
 
 	const outputPath = handleInsertHTML( html );
-	createWindow( outputPath );
+	return { filePath, outputPath };
 }
 
 // ####################################################################################################
@@ -70,7 +86,6 @@ function createWindow( outputPath )
 	mainWindow.loadURL(
 		'file://' + __dirname + '/' + outputPath
 	);
-
 	// ウィンドウが閉じられたときの処理
 	mainWindow.on( 'closed', () => {
 		mainWindow = null;
@@ -82,7 +97,7 @@ function createWindow( outputPath )
 		mainWindow.setTitle( 'Markdown Viewer' );
 
 		// PDFに出力する
-		ExportPDF( mainWindow, dialog );
+		handleExportPDF( mainWindow, dialog );
 	});
 
 }
@@ -91,26 +106,14 @@ async function handleGetFilePath()
 {
 	// マークダウンの拡張子でないものを選択した場合、エラーを表示して再度ファイル選択を促す
 	// BUGFIX: アプリを最初に起動したときにファイル選択ダイアログが複数回表示される
-	let counter = 0;
-	while( counter < 5 )
+	try
 	{
-		try
-		{
-			const filePath = await getFilePath( dialog );
-			return filePath;
-		}
-		catch( error )
-		{
-			dialog.showErrorBox( 'Error', error.message );
-			if( counter === 4 )
-			{
-				dialog.showErrorBox(
-					'Error', 'You have exceeded the maximum number of attempts.'
-				);
-				app.quit();
-			}
-			counter++;
-		}
+		const filePath = await getFilePath( dialog );
+		return filePath;
+	}
+	catch( error )
+	{
+		handleGetFilePathError( error );
 	}
 }
 
@@ -148,8 +151,7 @@ function handleInsertHTML( html )
 	// ラッピングするときにエラーをキャッチできないので、ここでエラーをキャッチする
 	try
 	{
-		const newHTML = insertHTML( html );
-		return newHTML;
+		return insertHTML( html );
 	}
 	catch( error )
 	{
@@ -168,6 +170,39 @@ function handleExportPDF( mainWindow, dialog )
 	{
 		dialog.showErrorBox( 'Error', error.message );
 	}
+}
+
+function watchFileChanges( mainWindow, filePath, outputPath, callback )
+{
+	fs.watch(
+		filePath,
+		{
+			encoding: 'utf-8'
+		},
+		( eventType ) => {
+			if( eventType === 'change' )
+			{
+				console.log( 'File changed.' );
+				reloadWindow( filePath );
+				callback( mainWindow, outputPath );
+			}
+		}
+	)
+}
+
+async function reloadWindow( filePath )
+{
+	const encoding = await handleGetFileEncoding( filePath );
+	const fileContent = await getFileContent( filePath, encoding );
+	const html = handleMarkdown( fileContent );
+	handleInsertHTML( html );
+}
+
+function loadWindow( mainWindow, outputPath )
+{
+	mainWindow.loadURL(
+		'file://' + __dirname + '/' + outputPath
+	);
 }
 
 // Helper functions
