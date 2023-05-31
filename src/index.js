@@ -20,6 +20,8 @@ app.on( 'ready', async () => {
 	createWindow( outputPath );
 
 	// ファイルの変更を監視する
+	// HACK: 複数ウインドウ時の対応
+	// HACK: 記述量削減→初回ロードの戻り値などを再定義
 	watchFileChanges(
 		BrowserWindow.getAllWindows()[0],
 		filePath,
@@ -102,7 +104,6 @@ function createWindow( outputPath )
 async function handleGetFilePath()
 {
 	// マークダウンの拡張子でないものを選択した場合、エラーを表示して再度ファイル選択を促す
-	// BUGFIX: アプリを最初に起動したときにファイル選択ダイアログが複数回表示される
 	try
 	{
 		const filePath = await getFilePath( dialog );
