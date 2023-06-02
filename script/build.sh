@@ -76,8 +76,6 @@ EOF
 
 eval "$build_command"
 
-# Rename the executable file
-#mv "./dist" "$BUILD_DIR/Markdown_Viewer"
 
 
 
