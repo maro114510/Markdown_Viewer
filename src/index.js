@@ -67,8 +67,8 @@ async function handleMain()
 function createWindow( outputPath )
 {
 	// A4の大きさを想定しているので、ウィンドウサイズは固定
-	const WIDTH = 855;
-	const HEIGHT = 600;
+	const WIDTH = 1300;
+	const HEIGHT = 800;
 
 	let mainWindow = new BrowserWindow({
 		width: WIDTH,
