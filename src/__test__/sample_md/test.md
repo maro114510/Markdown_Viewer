@@ -19,6 +19,14 @@
 
 ```python
 print("hello world")
+
+def func():
+	print("hello world")
+
+class Class:
+	def __init__(self):
+		print("hello world")
+	
 ```
 
 [link](https://google.com)
@@ -32,6 +40,21 @@ print("hello world")
 - [ ] task1
 - [x] task2
 - [ ] task3
+- [ ] mm
+- [ ] task1
+- [x] task2
+- [ ] task3
+
+
+> quote
+> md
+
+```rust:main.rs
+fn main() {
+	println!("hello world");
+}
+```
+
 
 ---
 
@@ -46,4 +69,29 @@ print("hello world")
 
 ```python
 print("hello world")
+```
+
+"morimori"
+
+> quote1
+> い
+> い
+
+
+#### mori
+
+docker
+
+```dockerfile
+FROM ubuntu:18.04
+
+RUN apt-get update && apt-get install -y \
+	curl \
+	git \
+	python3 \
+	python3-pip \
+	python3-dev \
+	python3-setuptools \
+	python3-wheel \
+	&& rm -rf /var/lib/apt/lists/*
 ```
