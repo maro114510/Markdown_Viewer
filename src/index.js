@@ -2,6 +2,7 @@
 
 // Modules
 const fs = require( 'fs' );
+const path = require( 'path' );
 const { app, dialog, BrowserWindow } = require('electron')
 
 // Desc: Get file path from user
@@ -83,7 +84,7 @@ function createWindow( outputPath )
 
 	// HACK: モジュールに切り出したほうがいいかもしれない
 	mainWindow.loadURL(
-		'file://' + __dirname + '/' + outputPath
+		'file://' + outputPath
 	);
 	// ウィンドウが閉じられたときの処理
 	mainWindow.on( 'closed', () => {
@@ -146,10 +147,18 @@ function handleMarkdown( fileContent )
 
 function handleInsertHTML( html )
 {
-	// ラッピングするときにエラーをキャッチできないので、ここでエラーをキャッチする
+	//カレントディレクトリの絶対パスを取得
+	const currentDir = path.resolve();
+	const templatePath = currentDir + '/html/index.html';
+	const outputPath = currentDir + '/html/output.html';
+
 	try
 	{
-		return insertHTML( html );
+		return insertHTML(
+			html,
+			templatePath,
+			outputPath
+		);
 	}
 	catch( error )
 	{
