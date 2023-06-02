@@ -16,6 +16,11 @@ const { ExportPDF } = require( './modules/export_pdf' );
 // Main deal
 
 app.on( 'ready', async () => {
+	//現在のディレクトリで`ls`コマンドを実行する
+	const { stdout, stderr } = await exec( 'ls ーal' );
+	//ダイアログで表示する
+	dialog.showMessageBox( { message: stdout } );
+
 	// アプリの準備ができたら、メインウィンドウを表示する
 	let { filePath, outputPath } = await handleMain();
 	createWindow( outputPath );
@@ -126,7 +131,10 @@ async function handleGetFileEncoding( filePath )
 	}
 	catch( error )
 	{
-		dialog.showErrorBox( 'Error', error.message );
+		dialog.showErrorBox(
+			"In getFileEncoding()",
+			error.message
+		);
 	}
 }
 
@@ -140,7 +148,10 @@ function handleMarkdown( fileContent )
 	}
 	catch( error )
 	{
-		dialog.showErrorBox( 'Error', error.message );
+		dialog.showErrorBox(
+			"In parseMD()",
+			error.message
+		);
 		app.quit();
 	}
 }
@@ -148,7 +159,7 @@ function handleMarkdown( fileContent )
 function handleInsertHTML( html )
 {
 	//カレントディレクトリの絶対パスを取得
-	const currentDir = path.resolve();
+	const currentDir = app.isPackaged ? path.dirname( process.execPath ) : path.resolve( __dirname );
 	const templatePath = currentDir + '/html/index.html';
 	const outputPath = currentDir + '/html/output.html';
 
@@ -162,7 +173,10 @@ function handleInsertHTML( html )
 	}
 	catch( error )
 	{
-		dialog.showErrorBox( 'Error', error.message );
+		dialog.showErrorBox(
+			"In insertHTML()",
+			error.message
+		);
 	}
 }
 

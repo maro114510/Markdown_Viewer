@@ -1,0 +1,13 @@
+{
+	"appId": "com.example.myapp",
+	"productName": "Markdown Viewer",
+	"directories": {
+		"output": "../build/Markdown_Viewer"
+	},
+	"files": [
+		"index.js",
+		"package.json",
+		"modules/**/*",
+		"html/**/*"
+	]
+}
