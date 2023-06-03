@@ -2,6 +2,7 @@
 
 // Modules
 const fs = require( 'fs' );
+const path = require( 'path' );
 const { app, dialog, BrowserWindow } = require('electron')
 
 // Desc: Get file path from user
@@ -83,7 +84,7 @@ function createWindow( outputPath )
 
 	// HACK: モジュールに切り出したほうがいいかもしれない
 	mainWindow.loadURL(
-		'file://' + __dirname + '/' + outputPath
+		'file://' + outputPath
 	);
 	// ウィンドウが閉じられたときの処理
 	mainWindow.on( 'closed', () => {
@@ -117,7 +118,6 @@ async function handleGetFilePath()
 
 async function handleGetFileEncoding( filePath )
 {
-	// ラッピングするときにエラーをキャッチできないので、ここでエラーをキャッチする
 	try
 	{
 		const encoding = await getFileEncoding( filePath );
@@ -125,13 +125,15 @@ async function handleGetFileEncoding( filePath )
 	}
 	catch( error )
 	{
-		dialog.showErrorBox( 'Error', error.message );
+		dialog.showErrorBox(
+			"In getFileEncoding()",
+			error.message
+		);
 	}
 }
 
 function handleMarkdown( fileContent )
 {
-	// ラッピングするときにエラーをキャッチできないので、ここでエラーをキャッチする
 	try
 	{
 		const html = parseMD( fileContent );
@@ -139,21 +141,45 @@ function handleMarkdown( fileContent )
 	}
 	catch( error )
 	{
-		dialog.showErrorBox( 'Error', error.message );
+		dialog.showErrorBox(
+			"In parseMD()",
+			error.message
+		);
 		app.quit();
 	}
 }
 
 function handleInsertHTML( html )
 {
-	// ラッピングするときにエラーをキャッチできないので、ここでエラーをキャッチする
+	let currentDir = null;
+	// ATTENTION: なぜこの指定方法でうまくいくか不明
+	// パッケージ化されている場合は、アプリのパスを取得
+	if( app.isPackaged )
+	{
+		currentDir = path.resolve( app.getAppPath(), '..' );
+	}
+	else
+	{
+		currentDir = __dirname;
+	}
+
+	const templatePath = path.join( currentDir, 'html', 'index.html' );
+	const outputPath = path.join( currentDir, 'html', 'output.html' );
+
 	try
 	{
-		return insertHTML( html );
+		return insertHTML(
+			html,
+			templatePath,
+			outputPath
+		);
 	}
 	catch( error )
 	{
-		dialog.showErrorBox( 'Error', error.message );
+		dialog.showErrorBox(
+			"In insertHTML()",
+			error.message
+		);
 	}
 }
 
