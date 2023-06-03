@@ -8,6 +8,16 @@
 		"index.js",
 		"package.json",
 		"modules/**/*",
-		"html/**/*"
+		{
+			"from": "html/**/*",
+			"to": "html"
+		}
+	],
+	"extraResources": [
+		{
+		"from": "html",
+		"to": "html",
+		"filter": ["**/*"]
+		}
 	]
 }

@@ -4,7 +4,7 @@ const fs = require( 'fs' );
 
 function insertHTML( html, templatePath, outputPath )
 {
-	const template = fs.readFileSync( templatePath, 'utf8' );
+	const template = fs.readFileSync( templatePath, 'utf-8' );
 
 	const pages = html.split(
 		'<div style="page-break-after: always;"></div>'
