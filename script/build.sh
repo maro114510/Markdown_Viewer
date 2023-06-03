@@ -61,7 +61,7 @@ while getopts ":p:h-:" opt; do
 done
 
 # Install dependencies
-cd "$PROJECT_DIR" || exit 1
+cd "$PROJECT_DIR"
 echo "Now is in $(pwd)"
 npm install
 
@@ -69,15 +69,13 @@ npm install
 build_command=$(cat <<EOF
 npx electron-builder \
 	build \
-	--projectDir "$PROJECT_DIR" \
+	--config electron-builder.json \
 	--$PLATFORM
 EOF
 )
 
 eval "$build_command"
 
-# Rename the executable file
-mv "./dist" "$BUILD_DIR/Markdown_Viewer"
 
 
 

@@ -2,11 +2,9 @@
 
 const fs = require( 'fs' );
 
-function insertHTML( html )
+function insertHTML( html, templatePath, outputPath )
 {
-	const templatePath = './html/index.html';
-	const outputPath = './html/output.html';
-	const template = fs.readFileSync( templatePath, 'utf8' );
+	const template = fs.readFileSync( templatePath, 'utf-8' );
 
 	const pages = html.split(
 		'<div style="page-break-after: always;"></div>'
