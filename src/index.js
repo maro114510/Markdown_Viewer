@@ -160,9 +160,7 @@ function handleInsertHTML( html )
 	}
 	else
 	{
-		//当該ソースコードのあるディレクトリを指定
 		currentDir = __dirname;
-		console.log( "currentDir: " + currentDir );
 	}
 
 	const templatePath = path.join( currentDir, 'html', 'index.html' );
