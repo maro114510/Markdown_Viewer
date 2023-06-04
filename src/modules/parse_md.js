@@ -43,7 +43,9 @@ function settingHighlightOption()
 			}
 
 			return `<pre><code class="hljs ${lang}">${highlightedCode}</code></pre>`
-		}
+		},
+		mangle: false,
+		headerIds: false
 	});
 }
 
