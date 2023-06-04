@@ -34,7 +34,7 @@ class RendererApp
 		this.loadWindow( outputPath );
 
 		this.mainWindow.on( 'closed', () => {
-			mainWindow = null;
+			this.mainWindow = null;
 		}
 		);
 		

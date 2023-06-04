@@ -199,15 +199,6 @@ class MarkdownViewer
 	{
 		console.log( "handleCreateWindow()" );
 
-		dialog.showMessageBox(
-			{
-				type: "info",
-				title: "Info",
-				message: this.outputsPath[ 0 ],
-				buttons: [ "OK" ],
-			}
-		);
-
 		this.rendererApp.createWindow( this.outputsPath[ 0 ] );
 	}
 }
