@@ -1,7 +1,7 @@
 // Desc: detect file encoding
 
 const fs = require( 'fs' );
-const jschardet = require('jschardet');
+const jschardet = require( 'jschardet' );
 
 
 function getFileEncoding( filePath )
@@ -36,6 +36,7 @@ function detectEncoding( data )
 
 
 module.exports = { getFileEncoding };
+
 
 
 // End of script

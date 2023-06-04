@@ -1,87 +1,47 @@
-const { app, dialog } = require('electron')
+// Desc: Main process of the app
 
-// Desc: Get file path from user
-const { getFilePath } = require('./modules/get_filepath');
-const { getFileEncoding } = require('./modules/detect_encoding');
-const { getFileContent } = require('./modules/get_file_content');
-const { parseMD } = require('./modules/parse_md');
+// Modules
+const { app, BrowserWindow } = require('electron')
+
+const { MarkdownViewer } = require( './mainProcess' );
 
 // Main deal
 
-app.on('ready', async () => {
-	const filePath = await handleGetFilePath();
-	const encoding = await handleGetFileEncoding( filePath );
-	const fileContent = await getFileContent( filePath, encoding );
-	const html = handleMarkdown( fileContent );
-	console.log( html );
+app.on( 'ready', async () => {
+	console.log( 'App is ready' );
+
+	createWindow( app );
 });
 
-app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin')
+app.on( 'window-all-closed', () => {
+	// macOSでは、ウィンドウが閉じられてもアプリケーションとして残す
+	if( process.platform !== 'darwin' )
 	{
 		app.quit();
 	}
 })
 
+app.on( 'activate', () => {
+	// ドックアイコンをクリックしたときにウィンドウを再表示する
+	if( BrowserWindow.getAllWindows().length === 0 )
+	{
+		console.log( 'App is activated' );
+		createWindow( app );
+	}
+});
+
 // functions
 
-async function handleGetFilePath()
+async function createWindow( app )
 {
-	let counter = 0;
-	while( counter < 5 )
-	{
-		try
-		{
-			const filePath = await getFilePath( dialog );
-			return filePath;
-		}
-		catch( error )
-		{
-			dialog.showErrorBox('Error', error.message);
-			if( counter === 4 )
-			{
-				dialog.showErrorBox('Error', 'You have exceeded the maximum number of attempts.');
-				app.quit();
-			}
-			counter++;
-		}
-	}
+	//メインプロセスのインスタンスを作成
+	const mainIns = new MarkdownViewer( app );
+
+	mainIns.init();
+	await mainIns.handleMain();
+	mainIns.handleCreateWindow();
 }
 
-async function handleGetFileEncoding( filePath )
-{
-	try
-	{
-		const encoding = await getFileEncoding( filePath );
-		return encoding;
-	}
-	catch( error )
-	{
-		dialog.showErrorBox( 'Error', error.message );
-	}
-}
-
-function handleMarkdown( fileContent )
-{
-	try
-	{
-		const html = parseMD( fileContent );
-		return html;
-	}
-	catch( error )
-	{
-		dialog.showErrorBox( 'Error', error.message );
-		app.quit();
-	}
-}
-
-// Helper functions
-
-function handleGetFilePathError( error )
-{
-	dialog.showErrorBox( 'Error', error.message );
-	app.quit();
-}
 
 
 // End of script

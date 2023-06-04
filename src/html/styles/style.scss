@@ -1,0 +1,125 @@
+// 源ノ角ゴシックを使用
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap');
+
+/* A4縦用のベース設定 */
+@page {
+	size: A4 portrait;
+	margin: 0mm;
+}
+
+body {
+	font-family: 'Source Sans Pro', sans-serif;
+
+	display: flex;
+	width: 90%;
+
+	.side_content {
+		width: 15%;
+		padding: 10px;
+		padding-top: 20px;
+
+		min-width: 200px;
+	}
+
+	.left_directory {
+		margin-top: 20px;
+		height: fit-content;
+
+		border: 1px solid #ccc;
+	}
+
+	.main_content {
+		padding: auto;
+	}
+
+	.export_button {
+		margin-top: 20px;
+		height: 90px;
+		border: 1px solid #ccc;
+		text-align: center;
+
+		a.btn {
+			margin: 10px;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			text-decoration: none;
+			box-shadow: 1px 1px  rgba(0, 0, 0, .2);
+
+			&:hover {
+				background-color: rgb(220, 224, 251);
+				box-shadow: none;
+				//0.6秒かけて変化
+				transition: 0.3s;
+			}
+		}
+	}
+
+	.page {
+		width: 210mm;
+		height: 296.5mm;
+
+		box-sizing: border-box;
+		padding: 20mm 25mm;
+
+		font-size: 11pt;
+
+		// // オーバーフローの制御
+		overflow: hidden;
+	}
+
+	.page-number {
+		position: absolute;
+		bottom: 5mm;
+		right: 25mm;
+		font-size: 10pt;
+		color: #666;
+	}
+	
+	blockquote {
+		margin: 0;
+		padding: 0 1em;
+		border-left: 4px solid #ccc;
+	}
+	
+	/* 改ページ */
+	.page-break {
+		page-break-after: always;
+	}
+}
+
+@media screen {
+	body {
+		background: #eee;
+	}
+
+	.page {
+		background: white;
+		box-shadow: 0 .5mm 2mm rgba(0, 0, 0, .3);
+		margin: 5mm;
+	}
+
+	.page:last-child {
+		page-break-after: avoid;
+	}
+}
+
+@media print {
+	.left_directory {
+		display: none;
+	}
+
+	.main_content {
+		display: block;
+		margin: 0;
+		padding: 0;
+	}
+
+	.export_button {
+		display: none;
+	}
+}
+
+
+
+// End of scss

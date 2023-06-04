@@ -1,6 +1,13 @@
-const { marked } = require( 'marked' );
+// Desc: Parse markdown
 
-function parseMD( str ) {
+const { marked } = require( 'marked' );
+const { highlight, highlightAuto } = require( 'highlight.js' );
+const { getLanguage } = require( 'highlight.js' );
+
+function parseMD( str )
+{
+	settingHighlightOption();
+
 	try
 	{
 		let htmlString = marked( str );
@@ -13,10 +20,39 @@ function parseMD( str ) {
 	}
 	catch( error )
 	{
-		throw new Error( 'Error parsing markdown', error.message );
+		throw new Error(
+			`Failed to parse markdown.\n${error.message}`
+		)
 	}
 }
 
+function settingHighlightOption()
+{
+	// highlight.jsが対応する言語を確認
+	// 対応する言語があればそのハイライト、そうでなければデフォルトにハイライトを使用
+	marked.setOptions({
+		highlight: function( code, lang ) {
+			let highlightedCode;
+			if( lang && getLanguage( lang ) )
+			{
+				highlightedCode = highlight( lang, code ).value;
+			}
+			else
+			{
+				highlightedCode = highlightAuto( code ).value;
+			}
+
+			return `<pre><code class="hljs ${lang}">${highlightedCode}</code></pre>`
+		},
+		mangle: false,
+		headerIds: false
+	});
+}
+
+
+
 module.exports = { parseMD };
+
+
 
 // End of script
