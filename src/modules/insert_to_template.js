@@ -23,8 +23,6 @@ function insertHTML( html, templatePath, outputPath )
 
 	// write new html to file
 	fs.writeFileSync( outputPath, newHTML );
-
-	return outputPath;
 }
 
 
