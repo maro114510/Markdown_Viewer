@@ -37,8 +37,7 @@ async function selectFilePath( dialog )
 	// デフォルトのパスを指定しつつ出力するファイルのフルパスを指定する
 	// 非同期にしないとオブジェクトを渡してしまう
 	return new Promise( ( resolve, reject ) => {
-		dialog
-			.showSaveDialog
+		dialog.showSaveDialog
 			(
 				{
 					title: 'Select output directory',
