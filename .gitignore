@@ -182,6 +182,7 @@ src/html/output.html
 # *.json
 *.pdf
 .vscode
+*copy.js
 
 
 ### macOS ###
