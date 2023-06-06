@@ -79,3 +79,6 @@ describe( "ErrorWrapper", () => {
 		})
 	)
 });
+
+
+// End of script
