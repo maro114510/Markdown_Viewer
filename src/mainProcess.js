@@ -11,6 +11,7 @@ const { getFileContent } = require( './modules/get_file_content' );
 const { parseMD } = require( './modules/parse_md' );
 const { insertHTML } = require( './modules/insert_to_template' );
 const { ExportPDF } = require( './modules/export_pdf' );
+const { ErrorWrapper } = require( './modules/error' );
 
 const { RendererApp } = require( './renderer' );
 
@@ -27,6 +28,8 @@ class MarkdownViewer
 
 		this.rendererApp = null;
 		this.app = app;
+
+		this.Err = new ErrorWrapper();
 	}
 
 	async init()
@@ -77,10 +80,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleGetFilePath()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
@@ -93,10 +93,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleGetFileEncoding()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
@@ -109,10 +106,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleGetFileContent()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
@@ -125,10 +119,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleMarkdown()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
@@ -144,10 +135,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleInsertHTML()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
@@ -162,10 +150,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleExportPDF()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
@@ -188,10 +173,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleWatchFileChanges()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
