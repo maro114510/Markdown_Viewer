@@ -172,6 +172,8 @@ dist
 
 ### project ###
 src/html/output.html
+src/log/*
+!src/log/.gitkeep
 
 
 ### others ###
@@ -182,6 +184,7 @@ src/html/output.html
 # *.json
 *.pdf
 .vscode
+*copy.js
 
 
 ### macOS ###
