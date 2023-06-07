@@ -1,5 +1,16 @@
 # MARKDOWN VIEWER
 
+[![testpass](https://img.shields.io/badge/tests-passing-brightgreen)](https://github.com/maro114510/Markdown_Viewer/actions)
+[![Version](https://img.shields.io/github/v/release/maro114510/Markdown_Viewer)](https://github.com/maro114510/Markdown_Viewer/releases)
+[![License](https://img.shields.io/github/license/maro114510/Markdown_Viewer)](https://github.com/maro114510/Markdown_Viewer/blob/master/LICENSE)
+
+[![Node.js](https://img.shields.io/badge/Node.js-Latest-brightgreen)](https://nodejs.org/)
+[![Electron](https://img.shields.io/badge/Electron-Latest-9FEAF9)](https://www.electronjs.org/)
+[![marked.js](https://img.shields.io/badge/marked.js-Latest-yellow)](https://marked.js.org/)
+[![Jest](https://img.shields.io/badge/Jest-Latest-C21325)](https://jestjs.io/)
+
+
+
 ## Description
 
 This is a simple markdown viewer that allows you to view markdown files in a browser.
@@ -24,8 +35,6 @@ This is a simple markdown viewer that allows you to view markdown files in a bro
 * Email: [towered-07.parody@icloud.com](mailto:towered-07.parody@icloud.com)
 
 ## Credits
-
-## Badges
 
 ## Features
 
