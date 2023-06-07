@@ -2,7 +2,7 @@
 
 const fs = require( 'fs' );
 const path = require( 'path' );
-const { dialog } = require('electron')
+const { dialog, ipcMain } = require('electron')
 
 // Desc: Get file path from user
 const { getFilePath } = require( './modules/get_filepath' );
@@ -28,6 +28,8 @@ class MarkdownViewer
 
 		this.rendererApp = null;
 		this.app = app;
+
+		this.handleExportButton();
 
 		this.Err = new ErrorWrapper();
 	}
@@ -182,6 +184,14 @@ class MarkdownViewer
 		console.log( "handleCreateWindow()" );
 
 		this.rendererApp.createWindow( this.outputsPath[ 0 ] );
+	}
+
+	handleExportButton()
+	{
+		ipcMain.on( 'export_pdf', ( event, arg ) => {
+			console.log( "export_pdf" );
+			this.handleExportPDF();
+		});
 	}
 }
 
