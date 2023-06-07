@@ -1,7 +1,7 @@
 // Desc: render markdown to html
 
 const path = require( 'path' );
-const { BrowserWindow } = require( 'electron' );
+const { BrowserWindow, ipcRenderer } = require( 'electron' );
 
 class RendererApp
 {
@@ -14,6 +14,8 @@ class RendererApp
 	async init()
 	{
 		console.log( "RendererApp.init" );
+
+		this.setupButtonEvennt();
 	}
 
 	async createWindow( outputPath )
@@ -50,6 +52,15 @@ class RendererApp
 		this.mainWindow.loadURL(
 			'file://' + outputPath
 		);
+	}
+
+	setupButtonEvennt()
+	{
+		const ExportButton = document.getElementById( 'export_pdf' );
+
+		ExportButton.addEventListener( 'click', () => {
+			ipcRenderer.send( 'export_pdf' );
+		});
 	}
 }
 
