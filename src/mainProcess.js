@@ -2,7 +2,7 @@
 
 const fs = require( 'fs' );
 const path = require( 'path' );
-const { dialog } = require('electron')
+const { dialog, ipcMain } = require('electron')
 
 // Desc: Get file path from user
 const { getFilePath } = require( './modules/get_filepath' );
@@ -11,6 +11,7 @@ const { getFileContent } = require( './modules/get_file_content' );
 const { parseMD } = require( './modules/parse_md' );
 const { insertHTML } = require( './modules/insert_to_template' );
 const { ExportPDF } = require( './modules/export_pdf' );
+const { ErrorWrapper } = require( './modules/error' );
 
 const { RendererApp } = require( './renderer' );
 
@@ -27,6 +28,10 @@ class MarkdownViewer
 
 		this.rendererApp = null;
 		this.app = app;
+
+		this.handleExportButton();
+
+		this.Err = new ErrorWrapper();
 	}
 
 	async init()
@@ -77,10 +82,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleGetFilePath()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
@@ -93,10 +95,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleGetFileEncoding()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
@@ -109,10 +108,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleGetFileContent()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
@@ -125,10 +121,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleMarkdown()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
@@ -144,10 +137,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleInsertHTML()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
@@ -162,10 +152,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleExportPDF()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
@@ -188,10 +175,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showErrorBox(
-				"Error\nIn handleWatchFileChanges()",
-				error.message
-			);
+			this.Err.errorMain( error );
 		}
 	}
 
@@ -200,6 +184,15 @@ class MarkdownViewer
 		console.log( "handleCreateWindow()" );
 
 		this.rendererApp.createWindow( this.outputsPath[ 0 ] );
+	}
+
+	handleExportButton()
+	{
+		console.log( "wait for export_pdf" );
+		ipcMain.on( 'export_pdf', ( event, arg ) => {
+			console.log( "export_pdf" );
+			this.handleExportPDF();
+		});
 	}
 }
 

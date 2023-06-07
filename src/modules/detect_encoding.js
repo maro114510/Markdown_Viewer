@@ -23,15 +23,9 @@ function getFileEncoding( filePath )
 
 function detectEncoding( data )
 {
-	try
-	{
-		const encoding = jschardet.detect( data ).encoding;
-		return encoding;
-	}
-	catch( error )
-	{
-		throw error;
-	}
+	const detected = jschardet.detect( data );
+	const encoding = detected.encoding;
+	return encoding;
 }
 
 
