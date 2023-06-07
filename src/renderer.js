@@ -11,11 +11,6 @@ class RendererApp
 		this.mainWindow = mainWindow;
 	}
 
-	async init()
-	{
-		console.log( "RendererApp.init" );
-	}
-
 	async createWindow( outputPath )
 	{
 		const WIDTH = 1300;
@@ -28,6 +23,8 @@ class RendererApp
 				nodeIntegration: false,
 				contextIsolation: true,
 				sandbox: true,
+				devTools: true,
+				preload: path.join( __dirname, "modules", "preload.js" ),
 			}
 		});
 
@@ -35,16 +32,16 @@ class RendererApp
 
 		this.mainWindow.on( 'closed', () => {
 			this.mainWindow = null;
-		}
-		);
-		
+		});
+
+		this.mainWindow.webContents.openDevTools();
 		this.mainWindow.webContents.on( 'did-finish-load', () => {
 			const fileName = path.basename( outputPath );
 			this.mainWindow.setTitle( fileName );
 		}
 		);
 	}
-	
+
 	async loadWindow( outputPath )
 	{
 		this.mainWindow.loadURL(
