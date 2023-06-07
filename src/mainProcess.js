@@ -188,8 +188,10 @@ class MarkdownViewer
 
 	handleExportButton()
 	{
+		console.log( "wait for export_pdf" );
 		ipcMain.on( 'export_pdf', ( event, arg ) => {
 			console.log( "export_pdf" );
+			console.log( arg );
 			this.handleExportPDF();
 		});
 	}

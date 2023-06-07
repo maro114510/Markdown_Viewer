@@ -1,7 +1,7 @@
 // Desc: render markdown to html
 
 const path = require( 'path' );
-const { BrowserWindow, ipcRenderer } = require( 'electron' );
+const { BrowserWindow } = require( 'electron' );
 
 class RendererApp
 {
@@ -9,13 +9,6 @@ class RendererApp
 	{
 		console.log( "RendererApp" );
 		this.mainWindow = mainWindow;
-	}
-
-	async init()
-	{
-		console.log( "RendererApp.init" );
-
-		this.setupButtonEvennt();
 	}
 
 	async createWindow( outputPath )
@@ -30,6 +23,8 @@ class RendererApp
 				nodeIntegration: false,
 				contextIsolation: true,
 				sandbox: true,
+				devTools: true,
+				preload: path.join( __dirname, "modules", "preload.js" ),
 			}
 		});
 
@@ -37,30 +32,21 @@ class RendererApp
 
 		this.mainWindow.on( 'closed', () => {
 			this.mainWindow = null;
-		}
-		);
-		
+		});
+
+		this.mainWindow.webContents.openDevTools();
 		this.mainWindow.webContents.on( 'did-finish-load', () => {
 			const fileName = path.basename( outputPath );
 			this.mainWindow.setTitle( fileName );
 		}
 		);
 	}
-	
+
 	async loadWindow( outputPath )
 	{
 		this.mainWindow.loadURL(
 			'file://' + outputPath
 		);
-	}
-
-	setupButtonEvennt()
-	{
-		const ExportButton = document.getElementById( 'export_pdf' );
-
-		ExportButton.addEventListener( 'click', () => {
-			ipcRenderer.send( 'export_pdf' );
-		});
 	}
 }
 

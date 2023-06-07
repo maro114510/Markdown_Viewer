@@ -1,3 +1,5 @@
+// This is real renderer process
+
 // DOMの読み込み完了後に実行
 document.addEventListener ("DOMContentLoaded", function () {
 	// .page要素を取得
@@ -62,7 +64,22 @@ document.addEventListener ("DOMContentLoaded", function () {
 			buffer = [];
 		}
 	});
+
+	const ExportButton = document.getElementById( 'export_pdf' );
+	ExportButton.addEventListener( 'click', function () {
+		// 以下の説明
+		/**
+		 * @desc: Send data to main process
+		 * @param: channel: string
+		 * @param: data: any
+		 * @return: void
+		 */
+		//現在時刻をデータにする
+		const date = new Date();
+		window.api.sendToMain( 'export_pdf', date );
+	});
 });
+
 
 
 // End of script
