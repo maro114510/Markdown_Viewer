@@ -80,8 +80,8 @@
 	},
 	"scripts": {
 		"start": "electron . --no-sandbox",
-		"lint": "eslint .",
-		"test": "jest"
+		"lint": "./node_modules/.bin/eslint .",
+		"test": "./node_modules/.bin/jest"
 	},
 	"keywords": [],
 	"author": "",
