@@ -37,22 +37,21 @@ async function selectFilePath( dialog )
 	// デフォルトのパスを指定しつつ出力するファイルのフルパスを指定する
 	// 非同期にしないとオブジェクトを渡してしまう
 	return new Promise( ( resolve, reject ) => {
-		dialog.showSaveDialog
-			(
-				{
-					title: 'Select output directory',
-					defaultPath: 'output.pdf',
-					filters: [
-						{ name: 'PDF', extensions: ['pdf'] }
-					]
-				}
-			)
-			.then( result => {
-				resolve( result.filePath );
-			})
-			.catch( error => {
-				reject(error);
-			});
+		dialog.showSaveDialog(
+			{
+				title: 'Select output directory',
+				defaultPath: 'output.pdf',
+				filters: [
+					{ name: 'PDF', extensions: ['pdf'] }
+				]
+			}
+		)
+		.then( result => {
+			resolve( result.filePath );
+		})
+		.catch( error => {
+			reject(error);
+		});
 	});
 }
 
