@@ -11,48 +11,80 @@ body {
 	font-family: 'Source Sans Pro', sans-serif;
 
 	display: flex;
-	width: 90%;
+	width: 100%;
+	justify-content: center;
 
-	.side_content {
-		width: 15%;
-		padding: 10px;
-		padding-top: 20px;
+	overflow: initial;
 
-		min-width: 200px;
+	#fixed-bar {
+		position: fixed;
+		margin-top: -10px;
+		left: 0;
+		width: 60px;
+		min-width: 60px;
+		height: 100vh;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		flex: 1;
+		transition: 0.3s;
+
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.bar_button {
+			margin-top: 10px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+
+			a.btn {
+				width: 50px;
+				height: 50px;
+				line-height: 50px;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+				text-decoration: none;
+				box-shadow: 1px 1px  rgba(0, 0, 0, .2);
+				justify-content: center;
+				align-items: center;
+
+				&:hover {
+					background-color: rgb(220, 224, 251);
+					box-shadow: none;
+				}
+
+				img {
+					vertical-align: middle;
+					margin-top: 0;
+					padding: 0;
+				}
+			}
+		}
 	}
 
-	.left_directory {
-		margin-top: 20px;
-		height: fit-content;
+	#directory {
+		position: fixed;
+		margin-top: -10px;
+		width: 200px;
+		height: 100vh;
+		left: 60px;
+		margin-right: 0px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-		border: 1px solid #ccc;
+		display: none;
 	}
 
 	.main_content {
-		padding: auto;
-	}
+		width: calc( 100% - 60px );
+		margin-left: 60px;
+		overflow-y: auto;
 
-	.export_button {
-		margin-top: 20px;
-		height: 90px;
-		border: 1px solid #ccc;
-		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 
-		a.btn {
-			margin: 10px;
-			padding: 10px;
-			border: 1px solid #ccc;
-			border-radius: 5px;
-			text-decoration: none;
-			box-shadow: 1px 1px  rgba(0, 0, 0, .2);
-
-			&:hover {
-				background-color: rgb(220, 224, 251);
-				box-shadow: none;
-				//0.6秒かけて変化
-				transition: 0.3s;
-			}
-		}
+		flex-wrap: wrap;
 	}
 
 	.page {
@@ -65,12 +97,15 @@ body {
 		font-size: 11pt;
 
 		// // オーバーフローの制御
-		overflow: hidden;
+		//overflow: hidden;
+
+		//ページ番号の固定
+		position: relative;
 	}
 
 	.page-number {
 		position: absolute;
-		bottom: 5mm;
+		bottom: 6mm;
 		right: 25mm;
 		font-size: 10pt;
 		color: #666;
@@ -105,17 +140,17 @@ body {
 }
 
 @media print {
-	.left_directory {
-		display: none;
-	}
-
 	.main_content {
 		display: block;
 		margin: 0;
 		padding: 0;
 	}
 
-	.export_button {
+	#fixed-bar {
+		display: none;
+	}
+
+	#directory {
 		display: none;
 	}
 }
