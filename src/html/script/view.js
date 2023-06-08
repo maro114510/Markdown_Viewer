@@ -4,10 +4,8 @@ let isOpen = false;
 
 folderButton.addEventListener( 'click', () => {
 	isOpen = !isOpen;
-	//子要素のimgを取得する
 	const img = folderButton.querySelector( 'img' );
 
-	//imgのsrcを変更する
 	if( isOpen )
 	{
 		// HACK: きもすぎる記述方法なんとかしてください。
@@ -18,7 +16,7 @@ folderButton.addEventListener( 'click', () => {
 		//中央揃えにする
 		img.style = 'vertical-align: middle;';
 
-		openFolder();
+		changeView( 200, isOpen );
 	}
 	else
 	{
@@ -27,29 +25,29 @@ folderButton.addEventListener( 'click', () => {
 		img.src = 'https://storage.googleapis.com/zenn-user-upload/d952fdac3686-20230608.png';
 		img.alt = 'folder_close';
 
-		closeFolder();
+		changeView( 0, isOpen );
 	}
 });
 
-function openFolder()
+function changeView( width, isOpen )
 {
-	//HACK:ハードコードもやめてほしい
+	const minus_count = 60 + width;
 	const main_content = document.querySelector( '.main_content' );
-	main_content.width = `calc( 100% - 200px )`;
-	//margin_left = 260px;にする
-	main_content.style = 'margin-left: 260px;';
-	
-	const directory = document.getElementById( 'directory' );
-	directory.style = 'display: block;';
-}
-
-function closeFolder()
-{
-	//HACK:ハードコードもやめてほしい
-	const main_content = document.querySelector( '.main_content' );
-	main_content.width = `calc( 100% - 60px )`;
-	main_content.style = 'margin-left: 60px;';
+	main_content.width = `calc( 100% - ${minus_count}px )`;
+	main_content.style = `margin-left: ${minus_count}px;`;
 
 	const directory = document.getElementById( 'directory' );
-	directory.style = 'display: none;';
+
+	if( isOpen )
+	{
+		directory.style = 'display: block;';
+	}
+	else
+	{
+		directory.style = 'display: none;';
+	}
 }
+
+
+
+// End of script
