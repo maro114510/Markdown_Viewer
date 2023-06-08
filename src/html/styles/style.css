@@ -8,42 +8,65 @@
 body {
   font-family: "Source Sans Pro", sans-serif;
   display: flex;
-  width: 90%;
+  width: 100%;
+  justify-content: center;
+  overflow: initial;
   /* 改ページ */
 }
-body .side_content {
-  width: 15%;
-  padding: 10px;
-  padding-top: 20px;
-  min-width: 200px;
+body #fixed-bar {
+  position: fixed;
+  margin-top: -10px;
+  left: 0;
+  width: 60px;
+  min-width: 60px;
+  height: 100vh;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-body .left_directory {
-  margin-top: 20px;
-  height: -moz-fit-content;
-  height: fit-content;
-  border: 1px solid #ccc;
-}
-body .main_content {
-  padding: auto;
-}
-body .export_button {
-  margin-top: 20px;
-  height: 90px;
-  border: 1px solid #ccc;
+body #fixed-bar .bar_button {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
-body .export_button a.btn {
-  margin: 10px;
-  padding: 10px;
+body #fixed-bar .bar_button a.btn {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
   border: 1px solid #ccc;
   border-radius: 5px;
   text-decoration: none;
   box-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+  justify-content: center;
+  align-items: center;
 }
-body .export_button a.btn:hover {
+body #fixed-bar .bar_button a.btn:hover {
   background-color: rgb(220, 224, 251);
   box-shadow: none;
-  transition: 0.3s;
+}
+body #directory {
+  position: fixed;
+  margin-top: -10px;
+  width: 200px;
+  height: 100vh;
+  left: 60px;
+  margin-right: 0px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+body .main_content {
+  width: calc(100% - 60px);
+  margin-left: 60px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
 }
 body .page {
   width: 210mm;
@@ -83,15 +106,15 @@ body .page-break {
   }
 }
 @media print {
-  .left_directory {
-    display: none;
-  }
   .main_content {
     display: block;
     margin: 0;
     padding: 0;
   }
-  .export_button {
+  #fixed-bar {
+    display: none;
+  }
+  #directory {
     display: none;
   }
 }/*# sourceMappingURL=style.css.map */

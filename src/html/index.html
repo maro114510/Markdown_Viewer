@@ -16,22 +16,29 @@
 </head>
 
 <body>
-	<div class="left_directory side_content">
+	<div id="fixed-bar">
+		<div class="folder bar_button">
+			<a href="javascript:void(0);" class="btn f_atag"  id="bar_folder">
+				<img src="https://storage.googleapis.com/zenn-user-upload/d952fdac3686-20230608.png" alt="folder_close" width="36px">
+			</a>
+		</div>
+		<div class="bar_button" id="export_button">
+			<a href="javascript:void(0);" class="btn">
+				<!--写真は中央揃え-->
+				<img src="https://storage.googleapis.com/zenn-user-upload/571593fb5604-20230608.png" alt="export_button" width="36px" style="vertical-align: middle;margin-top: 0;padding: 0;">
+			</a>
+		</div>
+	</div>
+	<div id="directory">
 		<ul>
-			<li>morimori</li>
-			<ul>
-				<li>mm</li>
-			</ul>
-			<li>dokidoki</li>
+			<li>mori</li>
+			<li>mori</li>
 		</ul>
 	</div>
 	<div class="main_content">
 		<!-- HTML -->
 	</div>
-	<div class="export_button side_content">
-		<p>EXPORT TO PDF</p>
-		<a href="javascript:void(0);" class="btn" id="export_pdf">Export</a>
-	</div>
 </body>
 
+<script src="./script/view.js"></script>
 </html>
