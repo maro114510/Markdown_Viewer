@@ -65,12 +65,15 @@ body {
 		font-size: 11pt;
 
 		// // オーバーフローの制御
-		overflow: hidden;
+		//overflow: hidden;
+
+		//ページ番号の固定
+		position: relative;
 	}
 
 	.page-number {
 		position: absolute;
-		bottom: 5mm;
+		bottom: 6mm;
 		right: 25mm;
 		font-size: 10pt;
 		color: #666;
