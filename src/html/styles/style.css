@@ -49,6 +49,11 @@ body #fixed-bar .bar_button a.btn:hover {
   background-color: rgb(220, 224, 251);
   box-shadow: none;
 }
+body #fixed-bar .bar_button a.btn img {
+  vertical-align: middle;
+  margin-top: 0;
+  padding: 0;
+}
 body #directory {
   position: fixed;
   margin-top: -10px;
