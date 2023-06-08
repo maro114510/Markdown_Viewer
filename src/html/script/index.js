@@ -2,7 +2,7 @@
 
 // DOMの読み込み完了後に実行
 document.addEventListener( "DOMContentLoaded", function () {
-	const ExportButton = document.getElementById( 'export_pdf' );
+	const ExportButton = document.getElementById( 'export_button' );
 	ExportButton.addEventListener( 'click', function () {
 		// 以下の説明
 		/**
@@ -45,6 +45,8 @@ window.onload = function () {
 		}
 	});
 
+	cleanPage();
+
 	appPageNumber();
 };
 
@@ -56,16 +58,16 @@ function getOverflowElements( page )
 	return overfloawElements;	
 }
 
-//すべてのロードが終了後に、ページクラスが空白なら削除する
-window.onload = function () {
-	var pages = document.querySelectorAll( ".page" );
+async function cleanPage()
+{
+	const pages = document.querySelectorAll( ".page" );
 	pages.forEach( function ( page, index ) {
 		if( page.children.length === 0 )
 		{
 			page.parentNode.removeChild( page );
 		}
 	});
-};
+}
 
 function appPageNumber()
 {
