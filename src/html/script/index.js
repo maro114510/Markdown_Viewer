@@ -22,10 +22,6 @@ window.onload = function () {
 	pages.forEach( function ( page, index ) {
 		contentHeight = page.scrollHeight;
 		pageHeight = page.clientHeight;
-		console.log(
-			"pageHeight: " + pageHeight + "\n" +
-			"contentHeight: " + contentHeight
-		)
 
 		//オーバーフロー時の処理
 		if( pageHeight < contentHeight )
