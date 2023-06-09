@@ -54,13 +54,13 @@ class MarkdownViewer
 		this.rendererApp = new RendererApp( this.mainWindow );
 	}
 
-	async handleLoad( filePath, encoding )
+	async handleLoad( filePath, encoding = "utf8" )
 	{
 		const fileContent = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
 		const html = this.handleMarkdown( fileContent );
 		this.handleInsertHTML( html );
 
-		this.handleCreateWindow();
+		this.mainWindow.webContents.reload();
 	}
 
 	async handleMain()
