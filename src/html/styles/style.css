@@ -81,6 +81,20 @@ body .page {
   font-size: 11pt;
   position: relative;
 }
+body .page table {
+  width: 100%;
+  border-collapse: collapse; /* セルの線を重ねる */
+  table-layout: fixed;
+}
+body .page table th, body .page table td {
+  border: 1px solid black;
+  padding: 8px;
+  white-space: normal;
+  word-break: break-all;
+}
+body .page table th {
+  background-color: #c6c6c6;
+}
 body .page-number {
   position: absolute;
   bottom: 6mm;
@@ -111,15 +125,34 @@ body .page-break {
   }
 }
 @media print {
-  .main_content {
-    display: block;
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  body #fixed-bar {
+    display: none;
+  }
+  body #directory {
+    display: none;
+  }
+  body .main_content {
+    width: 100%;
+    margin-left: 0px;
+  }
+  body .page {
     margin: 0;
-    padding: 0;
+    box-shadow: none;
   }
-  #fixed-bar {
-    display: none;
+  body .page .print-date {
+    display: block;
   }
-  #directory {
-    display: none;
+  body .page .file-name {
+    display: block;
+  }
+  body .page:last-child {
+    page-break-after: avoid;
+  }
+  body .page-number {
+    display: block;
   }
 }/*# sourceMappingURL=style.css.map */

@@ -25,6 +25,7 @@ class RendererApp
 				sandbox: true,
 				devTools: true,
 				preload: path.join( __dirname, "modules", "preload.js" ),
+				javascript: true,
 			}
 		});
 
@@ -40,6 +41,9 @@ class RendererApp
 			this.mainWindow.setTitle( fileName );
 		}
 		);
+
+		//現在開いているウインドウを返す
+		return this.mainWindow;
 	}
 
 	async loadWindow( outputPath )

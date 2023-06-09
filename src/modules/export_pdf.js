@@ -1,36 +1,52 @@
 // Desc: export PDF
 
-const fs = require('fs');
+const fs = require( 'fs');
 
 async function ExportPDF( mainWindow, dialog )
 {
 	const filePath = await selectFilePath( dialog );
-
 	const options = {
-		landscape: false,
+		margins: {
+			top: 0,
+			bottom: 0,
+			left: 0,
+			right: 0
+		},
 		printBackground: true,
-		pageSize: 'A4',
-		marginsType: 0,
+		pageSize: 'A4'
 	};
+
 
 	if( filePath )
 	{
-		mainWindow.webContents.printToPDF( options )
+		try
+		{
+			await changeBar( mainWindow, true );
+			mainWindow.webContents.printToPDF( options )
 			.then( data => {
-				fs.writeFile( filePath, data, error => {
+				fs.writeFile( filePath, data, ( error ) => {
 					if( error )
 					{
 						throw error;
 					}
-					// TODO: 成功のポップアップなどを実装
-					console.log( 'Write PDF successfully.' );
+					else
+					{
+						console.log( 'PDF exported' );
+					}
 				});
+
+			changeBar( mainWindow, false );
 			})
-			.catch( error => {
-				console.log( error )
-			});
+			
+		}
+		catch( error )
+		{
+			console.log( error );
+			throw error;
+		}
 	}
 }
+
 
 async function selectFilePath( dialog )
 {
@@ -53,6 +69,27 @@ async function selectFilePath( dialog )
 			reject(error);
 		});
 	});
+}
+
+
+
+async function changeBar( mainWindow, bool )
+{
+	//プロミスで非同期にして待たせる
+	if( bool )
+	{
+		new Promise( ( resolve, reject ) => {
+			//メインウインドウの`#bar`の`display`を`none`にする
+			mainWindow.webContents.executeJavaScript( 'document.getElementById( "fixed-bar" ).style.display = "none";' );
+			mainWindow.webContents.executeJavaScript( 'document.getElementById( "directory" ).style.display = "none";' );
+		});
+	}
+	else
+	{
+		//メインウインドウの`#bar`の`display`を`block`にする
+		mainWindow.webContents.executeJavaScript( 'document.getElementById( "fixed-bar" ).style.display = "block";' );
+	}
+
 }
 
 
