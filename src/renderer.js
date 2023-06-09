@@ -11,7 +11,7 @@ class RendererApp
 		this.mainWindow = mainWindow;
 	}
 
-	async createWindow( outputPath )
+	async createWindow( outputPath, watchFilePath )
 	{
 		const WIDTH = 1300;
 		const HEIGHT = 800;
@@ -37,12 +37,11 @@ class RendererApp
 
 		this.mainWindow.webContents.openDevTools();
 		this.mainWindow.webContents.on( 'did-finish-load', () => {
-			const fileName = path.basename( outputPath );
+			const fileName = path.basename( watchFilePath );
 			this.mainWindow.setTitle( fileName );
 		}
 		);
 
-		//現在開いているウインドウを返す
 		return this.mainWindow;
 	}
 

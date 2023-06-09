@@ -65,7 +65,7 @@ class MarkdownViewer
 
 	async handleMain()
 	{
-		// パスの取得からHTMLの挿入までの処理
+		// from get file path to insert html
 		this.watchFilesPath.push( await this.handleGetFilePath() );
 		const encoding = await this.handleGetFileEncoding( this.watchFilesPath[ 0 ] );
 		const fileContent = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
@@ -167,7 +167,6 @@ class MarkdownViewer
 	{
 		try
 		{
-			// ファイルの変更を監視する
 			fs.watch(
 				filePath,
 				{ encoding: "utf-8" },
@@ -188,14 +187,11 @@ class MarkdownViewer
 
 	async handleCreateWindow()
 	{
-		console.log( "handleCreateWindow()" );
-
-		this.mainWindow = await this.rendererApp.createWindow( this.outputsPath[ 0 ] );
+		this.mainWindow = await this.rendererApp.createWindow( this.outputsPath[ 0 ], this.watchFilesPath[ 0 ] );
 	}
 
 	handleExportButton()
 	{
-		console.log( "wait for export_pdf" );
 		ipcMain.on( 'export_pdf', ( event, arg ) => {
 			console.log( "export_pdf" );
 			this.handleExportPDF();

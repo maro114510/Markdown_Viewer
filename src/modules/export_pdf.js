@@ -74,21 +74,17 @@ async function selectFilePath( dialog )
 
 async function changeBar( mainWindow, bool )
 {
-	//プロミスで非同期にして待たせる
 	if( bool )
 	{
-		new Promise( ( resolve, reject ) => {
-			//メインウインドウの`#bar`の`display`を`none`にする
+		new Promise( () => {
 			mainWindow.webContents.executeJavaScript( 'document.getElementById( "fixed-bar" ).style.display = "none";' );
 			mainWindow.webContents.executeJavaScript( 'document.getElementById( "directory" ).style.display = "none";' );
 		});
 	}
 	else
 	{
-		//メインウインドウの`#bar`の`display`を`block`にする
 		mainWindow.webContents.executeJavaScript( 'document.getElementById( "fixed-bar" ).style.display = "block";' );
 	}
-
 }
 
 
