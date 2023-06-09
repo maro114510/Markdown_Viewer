@@ -11,7 +11,6 @@ body {
   width: 100%;
   justify-content: center;
   overflow: initial;
-  /* 改ページ */
 }
 body #fixed-bar {
   position: fixed;
@@ -75,11 +74,47 @@ body .main_content {
 }
 body .page {
   width: 210mm;
+  min-width: 210mm;
   height: 296.5mm;
   box-sizing: border-box;
   padding: 20mm 25mm;
   font-size: 11pt;
+  overflow: hidden;
   position: relative;
+  white-space: normal;
+  text-overflow: ellipsis;
+  word-wrap: break-all;
+  flex-shrink: 0;
+}
+body .page .print-date {
+  display: none;
+  position: absolute;
+  top: 5mm;
+  right: 16mm;
+  font-size: 8pt;
+  color: #666;
+}
+body .page .file-name {
+  display: none;
+  position: absolute;
+  top: 6mm;
+  left: 16mm;
+  font-size: 8pt;
+  color: #666;
+}
+body .page table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+body .page table th, body .page table td {
+  border: 1px solid black;
+  padding: 8px;
+  white-space: normal;
+  word-break: break-all;
+}
+body .page table th {
+  background-color: #c6c6c6;
 }
 body .page-number {
   position: absolute;
@@ -111,15 +146,34 @@ body .page-break {
   }
 }
 @media print {
-  .main_content {
-    display: block;
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  body #fixed-bar {
+    display: none;
+  }
+  body #directory {
+    display: none;
+  }
+  body .main_content {
+    width: 100%;
+    margin-left: 0px;
+  }
+  body .page {
     margin: 0;
-    padding: 0;
+    box-shadow: none;
   }
-  #fixed-bar {
-    display: none;
+  body .page .print-date {
+    display: block;
   }
-  #directory {
-    display: none;
+  body .page .file-name {
+    display: block;
+  }
+  body .page:last-child {
+    page-break-after: avoid;
+  }
+  body .page-number {
+    display: block;
   }
 }/*# sourceMappingURL=style.css.map */

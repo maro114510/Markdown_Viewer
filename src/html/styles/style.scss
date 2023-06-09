@@ -13,7 +13,6 @@ body {
 	display: flex;
 	width: 100%;
 	justify-content: center;
-
 	overflow: initial;
 
 	#fixed-bar {
@@ -89,18 +88,55 @@ body {
 
 	.page {
 		width: 210mm;
+		min-width: 210mm;
 		height: 296.5mm;
-
 		box-sizing: border-box;
 		padding: 20mm 25mm;
-
 		font-size: 11pt;
 
-		// // オーバーフローの制御
-		//overflow: hidden;
-
-		//ページ番号の固定
+		overflow: hidden;
 		position: relative;
+		//overflow-y: auto;
+
+		white-space: normal;
+		text-overflow: ellipsis;
+		word-wrap: break-all;
+		flex-shrink: 0;
+
+		.print-date {
+			display: none;
+			position: absolute;
+			top: 5mm;
+			right: 16mm;
+			font-size: 8pt;
+			color: #666;
+		}
+
+		.file-name {
+			display: none;
+			position: absolute;
+			top: 6mm;
+			left: 16mm;
+			font-size: 8pt;
+			color: #666;
+		}
+
+		table {
+			width: 100%;
+			border-collapse:  collapse;
+			table-layout: fixed;
+
+			th, td {
+				border: 1px solid black;
+				padding: 8px;
+				white-space: normal;
+				word-break: break-all;
+			}
+
+			th {
+				background-color: #c6c6c6;
+			}
+		}
 	}
 
 	.page-number {
@@ -116,8 +152,7 @@ body {
 		padding: 0 1em;
 		border-left: 4px solid #ccc;
 	}
-	
-	/* 改ページ */
+
 	.page-break {
 		page-break-after: always;
 	}
@@ -140,18 +175,44 @@ body {
 }
 
 @media print {
-	.main_content {
-		display: block;
-		margin: 0;
-		padding: 0;
-	}
+	body {
+		//勝手にhljsの背景色が消えるのを防止
+		-webkit-print-color-adjust: exact !important;
+		print-color-adjust: exact !important;
 
-	#fixed-bar {
-		display: none;
-	}
+		#fixed-bar {
+			display: none;
+		}
 
-	#directory {
-		display: none;
+		#directory {
+			display: none;
+		}
+
+		.main_content {
+			width: 100%;
+			margin-left: 0px;
+		}
+
+		.page {
+			margin: 0;
+			box-shadow: none;
+
+			.print-date {
+				display: block;
+			}
+
+			.file-name {
+				display: block;
+			}
+		}
+
+		.page:last-child {
+			page-break-after: avoid;
+		}
+
+		.page-number {
+			display: block;
+		}
 	}
 }
 
