@@ -70,8 +70,8 @@ describe( "ErrorWrapper", () => {
 			error.errorLog( error );
 
 			expect( mockAppendFileSync ).toHaveBeenCalledWith(
-				"../log/error.log",
-				"2023-06-06T00:00:00.000Z [Error] message:detail:fileName"
+				"./log/error.log",
+				"2023-06-06T00:00:00.000Z [Error] message:detail:fileName\n"
 			);
 
 			//モックを元に戻す;
