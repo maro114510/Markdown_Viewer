@@ -11,7 +11,6 @@ body {
   width: 100%;
   justify-content: center;
   overflow: initial;
-  /* 改ページ */
 }
 body #fixed-bar {
   position: fixed;
@@ -75,15 +74,37 @@ body .main_content {
 }
 body .page {
   width: 210mm;
+  min-width: 210mm;
   height: 296.5mm;
   box-sizing: border-box;
   padding: 20mm 25mm;
   font-size: 11pt;
+  overflow: hidden;
   position: relative;
+  white-space: normal;
+  text-overflow: ellipsis;
+  word-wrap: break-all;
+  flex-shrink: 0;
+}
+body .page .print-date {
+  display: none;
+  position: absolute;
+  top: 5mm;
+  right: 16mm;
+  font-size: 8pt;
+  color: #666;
+}
+body .page .file-name {
+  display: none;
+  position: absolute;
+  top: 6mm;
+  left: 16mm;
+  font-size: 8pt;
+  color: #666;
 }
 body .page table {
   width: 100%;
-  border-collapse: collapse; /* セルの線を重ねる */
+  border-collapse: collapse;
   table-layout: fixed;
 }
 body .page table th, body .page table td {

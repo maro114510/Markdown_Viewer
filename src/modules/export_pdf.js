@@ -36,8 +36,7 @@ async function ExportPDF( mainWindow, dialog )
 				});
 
 			changeBar( mainWindow, false );
-			})
-			
+			});
 		}
 		catch( error )
 		{
