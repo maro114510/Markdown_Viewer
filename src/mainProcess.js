@@ -72,7 +72,7 @@ class MarkdownViewer
 		const html = this.handleMarkdown( fileContent );
 		this.handleInsertHTML( html );
 
-		this.handleWatchFileChanges( this.watchFilesPath[ 0 ], encoding );
+		this.handleWatchFileChanges( this.watchFilesPath[ 0 ], encoding )
 	}
 
 	async handleGetFilePath()
@@ -169,11 +169,16 @@ class MarkdownViewer
 	{
 		try
 		{
+			let isWatching = true;
 			fs.watch( filePath, ( eventType ) => {
-				if( eventType === "change" )
+				if( eventType === "change" && isWatching )
 				{
+					isWatching = false;
 					console.log( "File changed" );
 					this.handleLoad( filePath );
+					setTimeout( () => {
+						isWatching = true;
+					}, 3000 );
 				}
 			});
 		}
