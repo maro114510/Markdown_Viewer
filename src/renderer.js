@@ -11,7 +11,7 @@ class RendererApp
 		this.mainWindow = mainWindow;
 	}
 
-	async createWindow( outputPath )
+	async createWindow( outputPath, watchFilePath )
 	{
 		const WIDTH = 1300;
 		const HEIGHT = 800;
@@ -25,6 +25,7 @@ class RendererApp
 				sandbox: true,
 				devTools: true,
 				preload: path.join( __dirname, "modules", "preload.js" ),
+				javascript: true,
 			}
 		});
 
@@ -36,10 +37,12 @@ class RendererApp
 
 		this.mainWindow.webContents.openDevTools();
 		this.mainWindow.webContents.on( 'did-finish-load', () => {
-			const fileName = path.basename( outputPath );
+			const fileName = path.basename( watchFilePath );
 			this.mainWindow.setTitle( fileName );
 		}
 		);
+
+		return this.mainWindow;
 	}
 
 	async loadWindow( outputPath )

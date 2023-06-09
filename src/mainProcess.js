@@ -25,6 +25,7 @@ class MarkdownViewer
 		this.templatePath = "";
 		this.watchFilesPath = [];
 		this.outputsPath = [];
+		this.mainWindow = null;
 
 		this.rendererApp = null;
 		this.app = app;
@@ -36,9 +37,6 @@ class MarkdownViewer
 
 	async init()
 	{
-		//レンダラープロセスのインスタンスを作成
-		this.rendererApp = new RendererApp( this.mainWindow );
-
 		if( this.app.isPackaged )
 		{
 			this.currentDir = path.resolve( app.getAppPath(), '..' );
@@ -52,6 +50,8 @@ class MarkdownViewer
 		this.outputsPath.push(
 			path.join( this.currentDir, "html", "output.html" )
 		)
+
+		this.rendererApp = new RendererApp( this.mainWindow );
 	}
 
 	async handleLoad()
@@ -65,7 +65,7 @@ class MarkdownViewer
 
 	async handleMain()
 	{
-		// パスの取得からHTMLの挿入までの処理
+		// from get file path to insert html
 		this.watchFilesPath.push( await this.handleGetFilePath() );
 		const encoding = await this.handleGetFileEncoding( this.watchFilesPath[ 0 ] );
 		const fileContent = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
@@ -145,10 +145,17 @@ class MarkdownViewer
 	{
 		try
 		{
-			ExportPDF(
-				this.mainWindow,
-				dialog
-			);
+			if( this.mainWindow && this.mainWindow.webContents )
+			{
+				ExportPDF(
+					this.mainWindow,
+					dialog
+				);
+			}
+			else
+			{
+				console.log( "mainWindow is not defined" );
+			}
 		}
 		catch( error )
 		{
@@ -160,7 +167,6 @@ class MarkdownViewer
 	{
 		try
 		{
-			// ファイルの変更を監視する
 			fs.watch(
 				filePath,
 				{ encoding: "utf-8" },
@@ -179,16 +185,13 @@ class MarkdownViewer
 		}
 	}
 
-	handleCreateWindow()
+	async handleCreateWindow()
 	{
-		console.log( "handleCreateWindow()" );
-
-		this.rendererApp.createWindow( this.outputsPath[ 0 ] );
+		this.mainWindow = await this.rendererApp.createWindow( this.outputsPath[ 0 ], this.watchFilesPath[ 0 ] );
 	}
 
 	handleExportButton()
 	{
-		console.log( "wait for export_pdf" );
 		ipcMain.on( 'export_pdf', ( event, arg ) => {
 			console.log( "export_pdf" );
 			this.handleExportPDF();

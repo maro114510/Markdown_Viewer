@@ -1,10 +1,8 @@
 // This is real renderer process
 
-// DOMの読み込み完了後に実行
 document.addEventListener( "DOMContentLoaded", function () {
 	const ExportButton = document.getElementById( 'export_button' );
 	ExportButton.addEventListener( 'click', function () {
-		// 以下の説明
 		/**
 		 * @desc: Send data to main process
 		 * @param: channel: string
@@ -15,71 +13,115 @@ document.addEventListener( "DOMContentLoaded", function () {
 	});
 });
 
-window.onload = function () {
-	var buffer = [];
+window.onload = function ()
+{
+	main();
+	addAll();
+	cleanPage();
+};
 
-	let pages = document.querySelectorAll( ".page" );
-	pages.forEach( function ( page, index ) {
-		contentHeight = page.scrollHeight;
-		pageHeight = page.clientHeight;
+async function main()
+{
+	const MAX_PAGE_HEIGHT = 500;
+	let pages = Array.from( document.querySelectorAll( ".page" ) );
+	const pageHeight = pages[ 0 ].clientHeight;
 
-		//オーバーフロー時の処理
+	for( let index = 0; index < MAX_PAGE_HEIGHT && index < pages.length; index++ )
+	{
+		const page = pages[ index ];
+		let contentHeight = page.scrollHeight;
+
 		if( pageHeight < contentHeight )
 		{
-			const overflowElements = getOverflowElements( page );
+			let memo = null;
+			const overHeightElements = [];
+			const childrenElements = Array.from( page.children );
 
-			overflowElements.forEach( function ( element ) {
-				buffer.push( element );
-				page.removeChild( element );
+			childrenElements.forEach( function ( element, index ) {
+				if( pageHeight <= element.offsetTop + element.offsetHeight )
+				{
+					if( memo === null )
+					{
+						memo = index;
+					}
+					overHeightElements.push( element );
+				}
+			});
+
+			if( childrenElements[ memo ] )
+			{
+				overHeightElements.unshift( childrenElements[ memo - 1 ] );
+			}
+
+			overHeightElements.forEach( function ( element ) {
+				element.parentNode.removeChild( element );
 			});
 
 			const newPage = document.createElement( "div" );
 			newPage.classList.add( "page" );
-			page.parentNode.insertBefore( newPage, page.nextSibling );
-
-			buffer.forEach( function ( element ) {
+			overHeightElements.forEach( function ( element ) {
 				newPage.appendChild( element );
 			});
-
-			buffer = [];
+			page.parentNode.insertBefore( newPage, page.nextSibling );
 		}
-	});
-
-	cleanPage();
-
-	appPageNumber();
-};
-
-function getOverflowElements( page )
-{
-	let overfloawElements = Array.from( page.children ).filter( function ( element ) {
-		return element.offsetTop + element.clientHeight > page.clientHeight;
-	});
-	return overfloawElements;	
+		pages = Array.from( document.querySelectorAll( ".page" ) ); 
+	}
 }
 
-async function cleanPage()
+
+function addAll()
+{
+	addDate();
+	appPageNumbers();
+	addFileName();
+}
+
+// Add page numbers to all page class elements
+function appPageNumbers()
 {
 	const pages = document.querySelectorAll( ".page" );
 	pages.forEach( function ( page, index ) {
-		if( page.children.length === 0 )
-		{
-			page.parentNode.removeChild( page );
-		}
-	});
-}
-
-function appPageNumber()
-{
-	var pages = document.querySelectorAll( ".page" );
-	pages.forEach( function ( page, index ) {
-		var pageNumber = document.createElement( "div" );
+		const pageNumber = document.createElement( "div" );
 		pageNumber.classList.add( "page-number" );
 		pageNumber.innerHTML = index + 1;
 		page.appendChild( pageNumber );
 	});
 }
 
+// Add current date and time
+function addDate()
+{
+	const date = new Date();
+	const page = document.querySelectorAll( ".page" );
+	page.forEach( function ( page ) {
+		const dateElement = document.createElement( "div" );
+		dateElement.classList.add( "print-date" );
+		dateElement.innerHTML = date.toLocaleString();
+		page.insertBefore( dateElement, page.firstChild );
+	});
+}
+
+function addFileName()
+{
+	const page = document.querySelectorAll( ".page" );
+	page.forEach( function ( page ) {
+		const fileName = document.createElement( "div" );
+		fileName.classList.add( "file-name" );
+		fileName.innerHTML = document.title;
+		page.insertBefore( fileName, page.firstChild );
+	});
+}
+
+function cleanPage()
+{
+	const page = document.querySelectorAll( ".page" );
+	page.forEach( function ( page ) {
+		if( page.children.length === 0 )
+		{
+			page.parentNode.removeChild( page );
+		}
+	});
+}
 
 
 // End of script
