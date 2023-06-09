@@ -16,7 +16,7 @@ class ErrorWrapper extends Error
 			configurable: true
 		} );
 
-		this.errorPath = "../log/error.log"
+		this.errorPath = "./log/error.log"
 	}
 
 	/**
@@ -56,7 +56,7 @@ class ErrorWrapper extends Error
 		//現在日付時刻とエラーの情報をすべてエラーログに出力する
 		//YYYY-MM-DD HH:mm:ss [name] message
 		const now = new Date();
-		const log = `${now.toISOString()} [${name}] ${message}:${detail}:${fileName}`;
+		const log = `${now.toISOString()} [${name}] ${message}:${detail}:${fileName}\n`;
 
 		//エラーログをファイルに出力する
 		fs.appendFileSync( this.errorPath, log );

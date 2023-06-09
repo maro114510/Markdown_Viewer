@@ -54,13 +54,13 @@ class MarkdownViewer
 		this.rendererApp = new RendererApp( this.mainWindow );
 	}
 
-	async handleLoad()
+	async handleLoad( filePath, encoding = "utf8" )
 	{
 		const fileContent = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
 		const html = this.handleMarkdown( fileContent );
 		this.handleInsertHTML( html );
 
-		this.handleCreateWindow();
+		this.mainWindow.webContents.reload();
 	}
 
 	async handleMain()
@@ -71,6 +71,8 @@ class MarkdownViewer
 		const fileContent = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
 		const html = this.handleMarkdown( fileContent );
 		this.handleInsertHTML( html );
+
+		this.handleWatchFileChanges( this.watchFilesPath[ 0 ], encoding )
 	}
 
 	async handleGetFilePath()
@@ -167,17 +169,18 @@ class MarkdownViewer
 	{
 		try
 		{
-			fs.watch(
-				filePath,
-				{ encoding: "utf-8" },
-				( eventType ) => {
-					if( eventType === "change" )
-					{
-						console.log( "File changed" );
-						this.handleLoad();
-					}
+			let isWatching = true;
+			fs.watch( filePath, ( eventType ) => {
+				if( eventType === "change" && isWatching )
+				{
+					isWatching = false;
+					console.log( "File changed" );
+					this.handleLoad( filePath );
+					setTimeout( () => {
+						isWatching = true;
+					}, 3000 );
 				}
-			)
+			});
 		}
 		catch( error )
 		{

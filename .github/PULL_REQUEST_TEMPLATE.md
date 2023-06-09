@@ -13,9 +13,3 @@
 ## Notice
 
 * test
-
----
-
-#### Remarks
-
-* test

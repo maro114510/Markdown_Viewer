@@ -28,7 +28,6 @@ function usage() {
 rm -rf "$BUILD_DIR/Markdown_Viewer"
 
 # Parse arguments
-
 while getopts ":p:h-:" opt; do
 	case "$opt" in
 		p)
