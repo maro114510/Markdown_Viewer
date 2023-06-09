@@ -17,18 +17,19 @@ window.onload = function ()
 {
 	main();
 	addAll();
+	cleanPage();
 };
 
 async function main()
 {
 	const MAX_PAGE_HEIGHT = 500;
 	let pages = Array.from( document.querySelectorAll( ".page" ) );
+	const pageHeight = pages[ 0 ].clientHeight;
 
-	for( let index = 0; index < MAX_PAGE_HEIGHT; index++ )
+	for( let index = 0; index < MAX_PAGE_HEIGHT && index < pages.length; index++ )
 	{
 		const page = pages[ index ];
-		const pageHeight = page.clientHeight;
-		const contentHeight = page.scrollHeight
+		let contentHeight = page.scrollHeight;
 
 		if( pageHeight < contentHeight )
 		{
@@ -63,7 +64,7 @@ async function main()
 			});
 			page.parentNode.insertBefore( newPage, page.nextSibling );
 		}
-		pages = document.querySelectorAll( ".page" );
+		pages = Array.from( document.querySelectorAll( ".page" ) ); 
 	}
 }
 
@@ -100,7 +101,6 @@ function addDate()
 	});
 }
 
-
 function addFileName()
 {
 	const page = document.querySelectorAll( ".page" );
@@ -109,6 +109,17 @@ function addFileName()
 		fileName.classList.add( "file-name" );
 		fileName.innerHTML = document.title;
 		page.insertBefore( fileName, page.firstChild );
+	});
+}
+
+function cleanPage()
+{
+	const page = document.querySelectorAll( ".page" );
+	page.forEach( function ( page ) {
+		if( page.children.length === 0 )
+		{
+			page.parentNode.removeChild( page );
+		}
 	});
 }
 
