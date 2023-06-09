@@ -16,7 +16,7 @@ class ErrorWrapper extends Error
 			configurable: true
 		} );
 
-		this.errorPath = "../log/error.log"
+		this.errorPath = "./log/error.log"
 	}
 
 	/**
@@ -29,14 +29,6 @@ class ErrorWrapper extends Error
 
 		const message = error.message;
 		const detail = error.detail;
-
-		dialog.showErrorBox(
-			{
-				title: "Error",
-				content: "An error has occurred.",
-				detail: `${message}\n${detail}`
-			}
-		);
 	}
 
 	/**
