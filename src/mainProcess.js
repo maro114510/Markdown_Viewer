@@ -12,6 +12,7 @@ const { parseMD } = require( './modules/parse_md' );
 const { insertHTML } = require( './modules/insert_to_template' );
 const { ExportPDF } = require( './modules/export_pdf' );
 const { ErrorWrapper } = require( './modules/error' );
+const { getDirectory } = require( './modules/get_directory' );
 
 const { RendererApp } = require( './renderer' );
 
@@ -54,7 +55,7 @@ class MarkdownViewer
 		this.rendererApp = new RendererApp( this.mainWindow );
 	}
 
-	async handleLoad( filePath, encoding = "utf8" )
+	async handleLoad( encoding = "utf8" )
 	{
 		const fileContent = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
 		const html = this.handleMarkdown( fileContent );
@@ -67,6 +68,7 @@ class MarkdownViewer
 	{
 		// from get file path to insert html
 		this.watchFilesPath.push( await this.handleGetFilePath() );
+		//this.handleDirectory();
 		const encoding = await this.handleGetFileEncoding( this.watchFilesPath[ 0 ] );
 		const fileContent = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
 		const html = this.handleMarkdown( fileContent );
@@ -175,7 +177,7 @@ class MarkdownViewer
 				{
 					isWatching = false;
 					console.log( "File changed" );
-					this.handleLoad( filePath );
+					this.handleLoad();
 					setTimeout( () => {
 						isWatching = true;
 					}, 3000 );
@@ -199,6 +201,18 @@ class MarkdownViewer
 			console.log( "export_pdf" );
 			this.handleExportPDF();
 		});
+	}
+
+	handleDirectory()
+	{
+		try
+		{
+			getDirectory();
+		}
+		catch( error )
+		{
+			this.Err.errorMain( error );
+		}
 	}
 }
 

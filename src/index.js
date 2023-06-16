@@ -14,7 +14,7 @@ app.on( 'ready', async () => {
 });
 
 app.on( 'window-all-closed', () => {
-	// macOSでは、ウィンドウが閉じられてもアプリケーションとして残す
+	// in macOS, keep app running until user quits explicitly
 	if( process.platform !== 'darwin' )
 	{
 		app.quit();
@@ -22,7 +22,7 @@ app.on( 'window-all-closed', () => {
 })
 
 app.on( 'activate', () => {
-	// ドックアイコンをクリックしたときにウィンドウを再表示する
+	// in macOS, re-create window when dock icon is clicked and there are no other windows
 	if( BrowserWindow.getAllWindows().length === 0 )
 	{
 		console.log( 'App is activated' );
@@ -34,7 +34,7 @@ app.on( 'activate', () => {
 
 async function createWindow( app )
 {
-	//メインプロセスのインスタンスを作成
+	// create main process instance
 	const mainIns = new MarkdownViewer( app );
 
 	mainIns.init();
