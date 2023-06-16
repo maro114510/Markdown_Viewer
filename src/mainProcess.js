@@ -68,7 +68,7 @@ class MarkdownViewer
 	{
 		// from get file path to insert html
 		this.watchFilesPath.push( await this.handleGetFilePath() );
-		this.handleDirectory();
+		//this.handleDirectory();
 		const encoding = await this.handleGetFileEncoding( this.watchFilesPath[ 0 ] );
 		const fileContent = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
 		const html = this.handleMarkdown( fileContent );
