@@ -15,7 +15,8 @@ function getDirectory()
 	});
 
 	const directory = readDirectoryRecursively( dirPath[0] );
-	console.log( directory );
+
+	return directory;
 }
 
 function readDirectoryRecursively( dirPath )

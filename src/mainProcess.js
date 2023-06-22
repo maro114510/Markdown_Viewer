@@ -68,7 +68,8 @@ class MarkdownViewer
 	{
 		// from get file path to insert html
 		this.watchFilesPath.push( await this.handleGetFilePath() );
-		//this.handleDirectory();
+		const direc = this.handleDirectory();
+		await this.sendDirectoryInfo( direc );
 		const encoding = await this.handleGetFileEncoding( this.watchFilesPath[ 0 ] );
 		const fileContent = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
 		const html = this.handleMarkdown( fileContent );
@@ -207,12 +208,20 @@ class MarkdownViewer
 	{
 		try
 		{
-			getDirectory();
+			const directory = getDirectory();
+			return directory;
 		}
 		catch( error )
 		{
 			this.Err.errorMain( error );
 		}
+	}
+
+	async sendDirectoryInfo( directory )
+	{
+		ipcMain.handle( 'get_directory', () => {
+			return directory;
+		});
 	}
 }
 

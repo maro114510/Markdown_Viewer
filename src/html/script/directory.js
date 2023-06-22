@@ -1,37 +1,10 @@
-// ディレクトリ情報の例
-const directory = {
-	path: 'root',
-	files: ['file1.txt', 'file2.txt'],
-	directories: [
-		{
-			path: 'root/directory1',
-			files: ['file3.txt'],
-			directories: []
-		},
-		{
-			path: 'root/directory2',
-			files: [],
-			directories: [
-				{
-					path: 'root/directory2/subdirectory1',
-					files: ['file4.txt'],
-					directories: [
-						{
-							path: 'root/directory2/subdirectory1/subsubdirectory1',
-							files: ['file5.txt'],
-							directories: []
-						},
-						{
-							path: 'root/directory2/subdirectory1/subsubdirectory2',
-							files: ['file6.txt'],
-							directories: []
-						}
-					]
-				}
-			]
-		}
-	]
-};
+let directory = null;
+
+document.addEventListener( "DOMContentLoaded", async function () {
+	directory = await window.api.sendDirectoryToRenderer( directory );
+
+	initPage( directory );
+});
 
 function initPage( directory )
 {
@@ -122,5 +95,3 @@ function getBasename( path )
 {
 	return path.replace( /^.*\//, '' );
 }
-
-initPage( directory );
