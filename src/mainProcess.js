@@ -32,6 +32,7 @@ class MarkdownViewer
 		this.app = app;
 
 		this.handleExportButton();
+		this.getChooseFile();
 
 		this.Err = new ErrorWrapper();
 	}
@@ -67,15 +68,11 @@ class MarkdownViewer
 	async handleMain()
 	{
 		// from get file path to insert html
-		this.watchFilesPath.push( await this.handleGetFilePath() );
 		const direc = this.handleDirectory();
 		await this.sendDirectoryInfo( direc );
-		const encoding = await this.handleGetFileEncoding( this.watchFilesPath[ 0 ] );
-		const fileContent = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
+		const fileContent = "";
 		const html = this.handleMarkdown( fileContent );
 		this.handleInsertHTML( html );
-
-		this.handleWatchFileChanges( this.watchFilesPath[ 0 ], encoding )
 	}
 
 	async handleGetFilePath()
@@ -100,7 +97,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			console.log( error );
 		}
 	}
 
@@ -221,6 +218,22 @@ class MarkdownViewer
 	{
 		ipcMain.handle( 'get_directory', () => {
 			return directory;
+		});
+	}
+
+	getChooseFile()
+	{
+		ipcMain.on( 'choose_file', async ( event, arg ) => {
+			console.log( arg );
+			const filePath = arg;
+			const encoding = await this.handleGetFileEncoding( filePath );
+			const fileContent = await this.handleGetFileContent( filePath, encoding );
+			const html = this.handleMarkdown( fileContent );
+			this.handleInsertHTML( html );
+			this.watchFilesPath.push( filePath );
+			this.handleWatchFileChanges( filePath );
+
+			this.rendererApp.loadWindow( this.outputsPath[ 0 ] );
 		});
 	}
 }

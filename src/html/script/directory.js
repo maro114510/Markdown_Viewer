@@ -77,11 +77,7 @@ function createDropdownChild( directory, parentId )
 			{
 				return;
 			}
-			let liElement = document.createElement( 'li' );
-			liElement.classList.add( 'dropdown-item' );
-			liElement.textContent = getBasename( file );
-			liElement.classList.add( directory.path );
-			selectElement.appendChild( liElement );
+			createFileItem( directory, selectElement, file );
 		});
 
 		if( document.getElementById( parentId ) !== null && selectElement.childNodes.length > 0 )
@@ -89,6 +85,23 @@ function createDropdownChild( directory, parentId )
 			document.getElementById( parentId ).appendChild( selectElement );
 		}
 	}
+}
+
+function createFileItem( directory, selectElement, file )
+{
+	let liElement = document.createElement( 'li' );
+	let aElement = document.createElement( 'a' );
+	aElement.setAttribute( 'href', 'javascript:void(0);' );
+	aElement.textContent = getBasename( file );
+	aElement.id = file;
+	liElement.appendChild( aElement );
+	selectElement.appendChild( liElement );
+
+	aElement.addEventListener( 'click', function( e ) {
+		let filePath = e.target.id;
+		console.log( filePath );
+		window.api.sendToMain( "choose_file", filePath );
+	});
 }
 
 function getBasename( path )
