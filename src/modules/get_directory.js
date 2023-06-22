@@ -40,6 +40,11 @@ function readDirectoryRecursively( dirPath )
 		}
 		else
 		{
+			//拡張子がmdのファイルだけを対象にする
+			if( path.extname( filePath ) !== ".md" )
+			{
+				return;
+			}
 			directory.files.push( filePath );
 		}
 	});
