@@ -10,7 +10,7 @@ body {
   display: flex;
   width: 100%;
   justify-content: center;
-  overflow: initial;
+  overflow: scroll;
 }
 body #fixed-bar {
   position: fixed;
@@ -62,6 +62,10 @@ body #directory {
   margin-right: 0px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: none;
+  overflow-x: scroll;
+}
+body #directory #directory-listing {
+  overflow: hidden;
 }
 body .main_content {
   width: calc(100% - 60px);
