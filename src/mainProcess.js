@@ -195,7 +195,7 @@ class MarkdownViewer
 
 	handleExportButton()
 	{
-		ipcMain.on( 'export_pdf', ( event, arg ) => {
+		ipcMain.on( 'export_pdf', () => {
 			console.log( "export_pdf" );
 			this.handleExportPDF();
 		});
