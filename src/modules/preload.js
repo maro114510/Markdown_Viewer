@@ -13,6 +13,10 @@ contextBridge.exposeInMainWorld(
 		 */
 		sendToMain: ( channel, data ) => {
 			ipcRenderer.send( channel, data );
+		},
+		sendDirectoryToRenderer: async ( directory ) => {
+			const result = await ipcRenderer.invoke( "get_directory", directory );
+			return result;
 		}
 	}
 );

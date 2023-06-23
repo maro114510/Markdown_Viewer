@@ -114,11 +114,11 @@ function addFileName()
 
 function cleanPage()
 {
-	const page = document.querySelectorAll( ".page" );
-	page.forEach( function ( page ) {
-		if( page.children.length === 0 )
+	const pages = document.querySelectorAll( ".page" );
+	pages.forEach( function ( page ) {
+		if( page.clientHeight === 0 )
 		{
-			page.parentNode.removeChild( page );
+			pages.removeChild( page );
 		}
 	});
 }
