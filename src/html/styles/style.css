@@ -10,7 +10,7 @@ body {
   display: flex;
   width: 100%;
   justify-content: center;
-  overflow: scroll;
+  overflow: inherit;
 }
 body #fixed-bar {
   position: fixed;
@@ -66,6 +66,33 @@ body #directory {
 }
 body #directory #directory-listing {
   overflow: hidden;
+}
+body #directory #directory-listing ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+body #directory #directory-listing ul li {
+  padding: 0;
+  margin: 0;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+body #directory #directory-listing ul li a {
+  margin: 0;
+  padding: 2px;
+  text-decoration: none;
+  color: black;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+body #directory #directory-listing ul li a:hover {
+  background-color: rgb(220, 224, 251);
+}
+body #directory #directory-listing ul li:not(:hover) {
+  background-color: #eee;
 }
 body .main_content {
   width: calc(100% - 60px);
