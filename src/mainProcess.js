@@ -32,6 +32,7 @@ class MarkdownViewer
 		this.app = app;
 
 		this.handleExportButton();
+		this.getChooseFile();
 
 		this.Err = new ErrorWrapper();
 	}
@@ -67,14 +68,11 @@ class MarkdownViewer
 	async handleMain()
 	{
 		// from get file path to insert html
-		this.watchFilesPath.push( await this.handleGetFilePath() );
-		//this.handleDirectory();
-		const encoding = await this.handleGetFileEncoding( this.watchFilesPath[ 0 ] );
-		const fileContent = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
+		const direc = this.handleDirectory();
+		await this.sendDirectoryInfo( direc );
+		const fileContent = "";
 		const html = this.handleMarkdown( fileContent );
 		this.handleInsertHTML( html );
-
-		this.handleWatchFileChanges( this.watchFilesPath[ 0 ], encoding )
 	}
 
 	async handleGetFilePath()
@@ -99,7 +97,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			console.log( error );
 		}
 	}
 
@@ -197,7 +195,7 @@ class MarkdownViewer
 
 	handleExportButton()
 	{
-		ipcMain.on( 'export_pdf', ( event, arg ) => {
+		ipcMain.on( 'export_pdf', () => {
 			console.log( "export_pdf" );
 			this.handleExportPDF();
 		});
@@ -207,12 +205,36 @@ class MarkdownViewer
 	{
 		try
 		{
-			getDirectory();
+			const directory = getDirectory();
+			return directory;
 		}
 		catch( error )
 		{
 			this.Err.errorMain( error );
 		}
+	}
+
+	async sendDirectoryInfo( directory )
+	{
+		ipcMain.handle( 'get_directory', () => {
+			return directory;
+		});
+	}
+
+	getChooseFile()
+	{
+		ipcMain.on( 'choose_file', async ( event, arg ) => {
+			console.log( arg );
+			const filePath = arg;
+			const encoding = await this.handleGetFileEncoding( filePath );
+			const fileContent = await this.handleGetFileContent( filePath, encoding );
+			const html = this.handleMarkdown( fileContent );
+			this.handleInsertHTML( html );
+			this.watchFilesPath.push( filePath );
+			this.handleWatchFileChanges( filePath );
+
+			this.rendererApp.loadWindow( this.outputsPath[ 0 ] );
+		});
 	}
 }
 

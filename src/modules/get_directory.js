@@ -15,7 +15,8 @@ function getDirectory()
 	});
 
 	const directory = readDirectoryRecursively( dirPath[0] );
-	console.log( directory );
+
+	return directory;
 }
 
 function readDirectoryRecursively( dirPath )
@@ -39,6 +40,11 @@ function readDirectoryRecursively( dirPath )
 		}
 		else
 		{
+			//拡張子がmdのファイルだけを対象にする
+			if( path.extname( filePath ) !== ".md" )
+			{
+				return;
+			}
 			directory.files.push( filePath );
 		}
 	});

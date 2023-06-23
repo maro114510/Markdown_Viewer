@@ -37,10 +37,17 @@ class RendererApp
 
 		this.mainWindow.webContents.openDevTools();
 		this.mainWindow.webContents.on( 'did-finish-load', () => {
-			const fileName = path.basename( watchFilePath );
+			let fileName = "";
+			if( watchFilePath === undefined || watchFilePath === "" )
+			{
+				fileName = "Markdown Viewer";
+			}
+			else
+			{
+				fileName = path.basename( watchFilePath );
+			}
 			this.mainWindow.setTitle( fileName );
-		}
-		);
+		});
 
 		return this.mainWindow;
 	}

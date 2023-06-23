@@ -13,7 +13,7 @@ body {
 	display: flex;
 	width: 100%;
 	justify-content: center;
-	overflow: initial;
+	overflow: inherit;
 
 	#fixed-bar {
 		position: fixed;
@@ -70,8 +70,45 @@ body {
 		left: 60px;
 		margin-right: 0px;
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
 		display: none;
+		// FIXME: ディレクトリ要素の横スクロールができない
+		// bodyのoverflowが関係している見込み
+		overflow-x: scroll;
+
+		#directory-listing {
+			overflow: hidden;
+			ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+
+				li {
+					padding: 0;
+					margin: 0;
+					padding-left: 10px;
+					padding-top: 5px;
+					padding-bottom: 5px;
+
+					a {
+						margin: 0;
+						padding: 2px;
+						text-decoration: none;
+						color: black;
+						display: block;
+						width: 100%;
+						height: 100%;
+						&:hover {
+							background-color: rgb(220, 224, 251);
+						}
+					}
+
+					&:not(:hover) {
+						background-color: #eee;
+					}
+				}
+
+			}
+		}
 	}
 
 	.main_content {
