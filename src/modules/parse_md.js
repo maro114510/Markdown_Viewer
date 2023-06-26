@@ -37,6 +37,11 @@ function settingHighlightOption()
 			{
 				highlightedCode = highlight( lang, code ).value;
 			}
+			//mermaidのときはパス
+			else if( lang === 'mermaid' )
+			{
+				highlightedCode = code;
+			}
 			else
 			{
 				highlightedCode = highlightAuto( code ).value;
