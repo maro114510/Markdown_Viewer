@@ -11,3 +11,6 @@ document.addEventListener( 'DOMContentLoaded', async () => {
 		suppressErrors: true,
 	});
 });
+
+
+// End of script
