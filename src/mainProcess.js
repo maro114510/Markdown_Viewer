@@ -69,10 +69,14 @@ class MarkdownViewer
 	{
 		// from get file path to insert html
 		const direc = this.handleDirectory();
+		//デバッグ用
+		dialog.showMessageBox( { message: direc } );
 		await this.sendDirectoryInfo( direc );
 		const fileContent = "";
 		const html = this.handleMarkdown( fileContent );
+		dialog.showMessageBox( { message: html } );
 		this.handleInsertHTML( html );
+		dialog.showMessageBox( { message: this.outputsPath[ 0 ] } );
 	}
 
 	async handleGetFilePath()
@@ -84,7 +88,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			dialog.showMessageBox( { message: error } );
 		}
 	}
 
@@ -97,7 +101,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			console.log( error );
+			dialog.showMessageBox( { message: error } );
 		}
 	}
 
@@ -110,7 +114,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			dialog.showMessageBox( { message: error } );
 		}
 	}
 
@@ -139,7 +143,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			dialog.showMessageBox( { message: error } );
 		}
 	}
 
@@ -161,7 +165,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			dialog.showMessageBox( { message: error } );
 		}
 	}
 
@@ -184,7 +188,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			dialog.showMessageBox( { message: error } );
 		}
 	}
 
@@ -203,14 +207,16 @@ class MarkdownViewer
 
 	handleDirectory()
 	{
+		dialog.showMessageBox( { message: "handleDirectory" } );
 		try
 		{
 			const directory = getDirectory();
+			dialog.showMessageBox( { message: directory } );
 			return directory;
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			dialog.showMessageBox( { message: error } );
 		}
 	}
 
