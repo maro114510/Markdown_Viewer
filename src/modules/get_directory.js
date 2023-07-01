@@ -16,12 +16,6 @@ function getDirectory()
 
 	const directory = readDirectoryRecursively( dirPath[0] );
 
-	//デバッグ用
-	dialog.showMessageBoxSync( {
-		title: "デバッグ",
-		message: JSON.stringify( directory )
-	});
-
 	return directory;
 }
 

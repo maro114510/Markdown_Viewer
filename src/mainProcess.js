@@ -11,10 +11,11 @@ const { getFileContent } = require( './modules/get_file_content' );
 const { parseMD } = require( './modules/parse_md' );
 const { insertHTML } = require( './modules/insert_to_template' );
 const { ExportPDF } = require( './modules/export_pdf' );
-const { ErrorWrapper } = require( './modules/error' );
+//const { ErrorWrapper } = require( './modules/error' );
 const { getDirectory } = require( './modules/get_directory' );
 
 const { RendererApp } = require( './renderer' );
+const { title } = require('process');
 
 // MarkdownViewerClass
 
@@ -33,8 +34,6 @@ class MarkdownViewer
 
 		this.handleExportButton();
 		this.getChooseFile();
-
-		this.Err = new ErrorWrapper();
 	}
 
 	async init()
@@ -70,13 +69,10 @@ class MarkdownViewer
 		// from get file path to insert html
 		const direc = this.handleDirectory();
 		//デバッグ用
-		dialog.showMessageBox( { message: direc } );
 		await this.sendDirectoryInfo( direc );
 		const fileContent = "";
 		const html = this.handleMarkdown( fileContent );
-		dialog.showMessageBox( { message: html } );
 		this.handleInsertHTML( html );
-		dialog.showMessageBox( { message: this.outputsPath[ 0 ] } );
 	}
 
 	async handleGetFilePath()
@@ -88,7 +84,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showMessageBox( { message: error } );
+			this.errorWrap( error );
 		}
 	}
 
@@ -101,7 +97,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showMessageBox( { message: error } );
+			this.errorWrap( error );
 		}
 	}
 
@@ -114,7 +110,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showMessageBox( { message: error } );
+			this.errorWrap( error );
 		}
 	}
 
@@ -143,7 +139,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showMessageBox( { message: error } );
+			this.errorWrap( error );
 		}
 	}
 
@@ -165,7 +161,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showMessageBox( { message: error } );
+			this.errorWrap( error );
 		}
 	}
 
@@ -188,7 +184,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			dialog.showMessageBox( { message: error } );
+			this.errorWrap( error );
 		}
 	}
 
@@ -207,16 +203,14 @@ class MarkdownViewer
 
 	handleDirectory()
 	{
-		dialog.showMessageBox( { message: "handleDirectory" } );
 		try
 		{
 			const directory = getDirectory();
-			dialog.showMessageBox( { message: directory } );
 			return directory;
 		}
 		catch( error )
 		{
-			dialog.showMessageBox( { message: error } );
+			this.errorWrap( error );;
 		}
 	}
 
@@ -241,6 +235,14 @@ class MarkdownViewer
 
 			this.rendererApp.loadWindow( this.outputsPath[ 0 ] );
 		});
+	}
+
+	errorWrap( error )
+	{
+		console.log( error );
+		dialog.showErrorBox(
+			error
+		);
 	}
 }
 
