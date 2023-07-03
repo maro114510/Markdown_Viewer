@@ -46,7 +46,7 @@ function findDirectory( directory, targetPath )
 
 	for( let i = 0; i < directory.directories.length; i++ )
 	{
-		const result = findDirectory( directory.directories[i], targetPath );
+		const result = findDirectory( directory.directories[ i ], targetPath );
 		if (result)
 		{
 			return result;
@@ -77,7 +77,7 @@ function createDropdownChild( directory, parentId )
 			{
 				return;
 			}
-			createFileItem( directory, selectElement, file );
+			createFileItem( selectElement, file );
 		});
 
 		if( document.getElementById( parentId ) !== null && selectElement.childNodes.length > 0 )
@@ -87,7 +87,7 @@ function createDropdownChild( directory, parentId )
 	}
 }
 
-function createFileItem( directory, selectElement, file )
+function createFileItem( selectElement, file )
 {
 	let liElement = document.createElement( 'li' );
 	let aElement = document.createElement( 'a' );
