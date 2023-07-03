@@ -1,4 +1,6 @@
 // Desc: App entry point
+//@ts-check
+'use strict';
 
 const fs = require( 'fs' );
 const path = require( 'path' );
@@ -20,9 +22,18 @@ const { RendererApp } = require( './renderer' );
 
 class MarkdownViewer
 {
-	constructor( app )
+	currentDir: string;
+	templatePath: string;
+	watchFilesPath: string[];
+	outputsPath: string[];
+	mainWindow: any;
+	rendererApp: any;
+	app: any;
+
+	constructor( app: any )
 	{
 		this.currentDir = "";
+
 		this.templatePath = "";
 		this.watchFilesPath = [];
 		this.outputsPath = [];
@@ -86,7 +97,7 @@ class MarkdownViewer
 		}
 	}
 
-	async handleGetFileEncoding( filePath )
+	async handleGetFileEncoding( filePath: string )
 	{
 		try
 		{
@@ -99,7 +110,7 @@ class MarkdownViewer
 		}
 	}
 
-	async handleGetFileContent( filePath, encoding )
+	async handleGetFileContent( filePath: string, encoding: string )
 	{
 		try
 		{
@@ -112,7 +123,7 @@ class MarkdownViewer
 		}
 	}
 
-	handleMarkdown( fileContent )
+	handleMarkdown( fileContent: string )
 	{
 		try
 		{
@@ -121,11 +132,11 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			this.errorWrap( error );
 		}
 	}
 
-	handleInsertHTML( html )
+	handleInsertHTML( html: string )
 	{
 		try
 		{
@@ -163,12 +174,12 @@ class MarkdownViewer
 		}
 	}
 
-	handleWatchFileChanges( filePath )
+	handleWatchFileChanges( filePath: string )
 	{
 		try
 		{
 			let isWatching = true;
-			fs.watch( filePath, ( eventType ) => {
+			fs.watch( filePath, ( eventType: any ) => {
 				if( eventType === "change" && isWatching )
 				{
 					isWatching = false;
@@ -212,7 +223,7 @@ class MarkdownViewer
 		}
 	}
 
-	async sendDirectoryInfo( directory )
+	async sendDirectoryInfo( directory: any )
 	{
 		ipcMain.handle( 'get_directory', () => {
 			return directory;
@@ -221,7 +232,7 @@ class MarkdownViewer
 
 	getChooseFile()
 	{
-		ipcMain.on( 'choose_file', async ( event, arg ) => {
+		ipcMain.on( 'choose_file', async ( event: any, arg: string ) => {
 			console.log( arg );
 			const filePath = arg;
 			const encoding = await this.handleGetFileEncoding( filePath );
@@ -235,7 +246,7 @@ class MarkdownViewer
 		});
 	}
 
-	errorWrap( error )
+	errorWrap( error: Error )
 	{
 		console.log( error );
 		dialog.showErrorBox(
@@ -249,9 +260,6 @@ class MarkdownViewer
 
 // ####################################################################################################
 
-module.exports = {
-	MarkdownViewer
-}
 
 
 

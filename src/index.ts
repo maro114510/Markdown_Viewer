@@ -1,9 +1,8 @@
 // Desc: Main process of the app
 
 // Modules
-const { app, dialog, BrowserWindow } = require('electron')
-
-const { MarkdownViewer } = require( './mainProcess' );
+const { app, BrowserWindow } = require('electron')
+//const { MarkdownViewer } = require( './mainProcess' );
 
 // Main deal
 
@@ -44,11 +43,7 @@ async function createWindow( app: any )
 	}
 	catch( error )
 	{
-		dialog.showErrorBox(
-			error.name,
-			error.message,
-			error.stack
-		)
+		console.error( error );
 	}
 }
 
