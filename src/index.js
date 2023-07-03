@@ -1,7 +1,7 @@
 // Desc: Main process of the app
 
 // Modules
-const { app, BrowserWindow } = require('electron')
+const { app, dialog, BrowserWindow } = require('electron')
 
 const { MarkdownViewer } = require( './mainProcess' );
 
@@ -10,7 +10,7 @@ const { MarkdownViewer } = require( './mainProcess' );
 app.on( 'ready', async () => {
 	console.log( 'App is ready' );
 
-	createWindow( app );
+	await createWindow( app );
 });
 
 app.on( 'window-all-closed', () => {
@@ -21,12 +21,12 @@ app.on( 'window-all-closed', () => {
 	}
 })
 
-app.on( 'activate', () => {
+app.on( 'activate', async () => {
 	// in macOS, re-create window when dock icon is clicked and there are no other windows
 	if( BrowserWindow.getAllWindows().length === 0 )
 	{
 		console.log( 'App is activated' );
-		createWindow( app );
+		await createWindow( app );
 	}
 });
 
@@ -34,12 +34,22 @@ app.on( 'activate', () => {
 
 async function createWindow( app )
 {
-	// create main process instance
-	const mainIns = new MarkdownViewer( app );
-
-	mainIns.init();
-	await mainIns.handleMain();
-	mainIns.handleCreateWindow();
+	try
+	{
+		// create main process instance
+		const mainIns = new MarkdownViewer( app );
+		mainIns.init();
+		await mainIns.handleMain();
+		mainIns.handleCreateWindow();
+	}
+	catch( error )
+	{
+		dialog.showErrorBox(
+			error.name,
+			error.message,
+			error.stack
+		)
+	}
 }
 
 

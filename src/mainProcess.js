@@ -15,7 +15,6 @@ const { ExportPDF } = require( './modules/export_pdf' );
 const { getDirectory } = require( './modules/get_directory' );
 
 const { RendererApp } = require( './renderer' );
-const { title } = require('process');
 
 // MarkdownViewerClass
 
@@ -36,11 +35,11 @@ class MarkdownViewer
 		this.getChooseFile();
 	}
 
-	async init()
+	init()
 	{
 		if( this.app.isPackaged )
 		{
-			this.currentDir = path.resolve( app.getAppPath(), '..' );
+			this.currentDir = path.resolve( this.app.getAppPath(), '..' );
 		}
 		else
 		{
@@ -50,7 +49,7 @@ class MarkdownViewer
 		this.templatePath = path.join( this.currentDir, "html", "index.html" );
 		this.outputsPath.push(
 			path.join( this.currentDir, "html", "output.html" )
-		)
+		);
 
 		this.rendererApp = new RendererApp( this.mainWindow );
 	}
@@ -68,8 +67,7 @@ class MarkdownViewer
 	{
 		// from get file path to insert html
 		const direc = this.handleDirectory();
-		//デバッグ用
-		await this.sendDirectoryInfo( direc );
+		this.sendDirectoryInfo( direc );
 		const fileContent = "";
 		const html = this.handleMarkdown( fileContent );
 		this.handleInsertHTML( html );
@@ -241,7 +239,9 @@ class MarkdownViewer
 	{
 		console.log( error );
 		dialog.showErrorBox(
-			error
+			error.name,
+			error.message,
+			error.stack
 		);
 	}
 }
