@@ -6,7 +6,7 @@
 const { app, BrowserWindow } = require('electron');
 
 // Classes
-import { MarkdownViewer } from './mainProcess';
+const { MarkdownViewer } = require( './mainProcess' );
 
 // Main deal
 
@@ -37,22 +37,18 @@ app.on( 'activate', async () => {
 
 async function createWindow( app: any )
 {
-	const mainIns: any = new MarkdownViewer( app );
-	mainIns.init();
-	await mainIns.handleMain();
-	mainIns.handleCreateWindow();
-	//try
-	//{
-	//	// create main process instance
-	//	const mainIns: any = new MarkdownViewer( app );
-	//	mainIns.init();
-	//	await mainIns.handleMain();
-	//	mainIns.handleCreateWindow();
-	//}
-	//catch( error )
-	//{
-	//	console.error( error );
-	//}
+	try
+	{
+		// create main process instance
+		const mainIns: any = new MarkdownViewer( app );
+		mainIns.init();
+		await mainIns.handleMain();
+		mainIns.handleCreateWindow();
+	}
+	catch( error )
+	{
+		console.error( error );
+	}
 }
 
 

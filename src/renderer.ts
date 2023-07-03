@@ -3,7 +3,6 @@
 'use strict';
 
 const path = require( 'path' );
-const { BrowserWindow } = require( 'electron' );
 
 class RendererApp
 {
