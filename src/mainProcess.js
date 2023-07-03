@@ -11,7 +11,7 @@ const { getFileContent } = require( './modules/get_file_content' );
 const { parseMD } = require( './modules/parse_md' );
 const { insertHTML } = require( './modules/insert_to_template' );
 const { ExportPDF } = require( './modules/export_pdf' );
-const { ErrorWrapper } = require( './modules/error' );
+//const { ErrorWrapper } = require( './modules/error' );
 const { getDirectory } = require( './modules/get_directory' );
 
 const { RendererApp } = require( './renderer' );
@@ -33,15 +33,13 @@ class MarkdownViewer
 
 		this.handleExportButton();
 		this.getChooseFile();
-
-		this.Err = new ErrorWrapper();
 	}
 
-	async init()
+	init()
 	{
 		if( this.app.isPackaged )
 		{
-			this.currentDir = path.resolve( app.getAppPath(), '..' );
+			this.currentDir = path.resolve( this.app.getAppPath(), '..' );
 		}
 		else
 		{
@@ -51,7 +49,7 @@ class MarkdownViewer
 		this.templatePath = path.join( this.currentDir, "html", "index.html" );
 		this.outputsPath.push(
 			path.join( this.currentDir, "html", "output.html" )
-		)
+		);
 
 		this.rendererApp = new RendererApp( this.mainWindow );
 	}
@@ -69,7 +67,7 @@ class MarkdownViewer
 	{
 		// from get file path to insert html
 		const direc = this.handleDirectory();
-		await this.sendDirectoryInfo( direc );
+		this.sendDirectoryInfo( direc );
 		const fileContent = "";
 		const html = this.handleMarkdown( fileContent );
 		this.handleInsertHTML( html );
@@ -84,7 +82,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			this.errorWrap( error );
 		}
 	}
 
@@ -97,7 +95,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			console.log( error );
+			this.errorWrap( error );
 		}
 	}
 
@@ -110,7 +108,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			this.errorWrap( error );
 		}
 	}
 
@@ -139,7 +137,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			this.errorWrap( error );
 		}
 	}
 
@@ -161,7 +159,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			this.errorWrap( error );
 		}
 	}
 
@@ -184,7 +182,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			this.errorWrap( error );
 		}
 	}
 
@@ -210,7 +208,7 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			this.errorWrap( error );;
 		}
 	}
 
@@ -235,6 +233,16 @@ class MarkdownViewer
 
 			this.rendererApp.loadWindow( this.outputsPath[ 0 ] );
 		});
+	}
+
+	errorWrap( error )
+	{
+		console.log( error );
+		dialog.showErrorBox(
+			error.name,
+			error.message,
+			error.stack
+		);
 	}
 }
 
