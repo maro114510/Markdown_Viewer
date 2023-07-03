@@ -10,7 +10,6 @@ const { dialog, ipcMain } = require('electron')
 const { getFilePath } = require( './modules/get_filepath' );
 const { getFileEncoding } = require( './modules/detect_encoding' );
 const { getFileContent } = require( './modules/get_file_content' );
-const { parseMD } = require( './modules/parse_md' );
 const { insertHTML } = require( './modules/insert_to_template' );
 const { ExportPDF } = require( './modules/export_pdf' );
 //const { ErrorWrapper } = require( './modules/error' );

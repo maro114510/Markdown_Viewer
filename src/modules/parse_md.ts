@@ -4,7 +4,7 @@ const { marked } = require( 'marked' );
 const { highlight, highlightAuto } = require( 'highlight.js' );
 const { getLanguage } = require( 'highlight.js' );
 
-function parseMD( str )
+function parseMD( str: string )
 {
 	settingHighlightOption();
 
@@ -31,7 +31,7 @@ function settingHighlightOption()
 	// highlight.jsが対応する言語を確認
 	// 対応する言語があればそのハイライト、そうでなければデフォルトにハイライトを使用
 	marked.setOptions({
-		highlight: function( code, lang ) {
+		highlight: function( code: string, lang: string ) {
 			let highlightedCode;
 			if( lang && getLanguage( lang ) )
 			{

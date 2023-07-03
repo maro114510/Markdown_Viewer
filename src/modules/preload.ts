@@ -11,10 +11,10 @@ contextBridge.exposeInMainWorld(
 		 * @return: void
 		 * @example: api.sendToMain( "channel", data );
 		 */
-		sendToMain: ( channel, data ) => {
+		sendToMain: ( channel: any, data: string ) => {
 			ipcRenderer.send( channel, data );
 		},
-		sendDirectoryToRenderer: async ( directory ) => {
+		sendDirectoryToRenderer: async ( directory: any ) => {
 			const result = await ipcRenderer.invoke( "get_directory", directory );
 			return result;
 		}
