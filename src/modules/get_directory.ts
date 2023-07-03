@@ -1,9 +1,10 @@
 // Desc: Open directory
 
+const { dialog } = require( 'electron' );
 
 // Main deal
 
-function getDirectory()
+export function getDirectory()
 {
 	const dirPath = dialog.showOpenDialogSync( {
 		properties: [ 'openDirectory' ]

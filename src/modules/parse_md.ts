@@ -56,7 +56,7 @@ function settingHighlightOption()
 
 
 
-module.exports = { parseMD };
+
 
 
 

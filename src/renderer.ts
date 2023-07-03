@@ -1,5 +1,9 @@
 // Desc: render markdown to html
+//@ts-check
+'use strict';
 
+const path = require( 'path' );
+const { BrowserWindow } = require( 'electron' );
 
 class RendererApp
 {

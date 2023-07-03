@@ -1,7 +1,7 @@
 // Desc: Get file path from user
 
 
-function getFilePath( dialog: any )
+export function getFilePath( dialog: any )
 {
 	return new Promise( ( resolve, reject ) => {
 		dialog

@@ -1,7 +1,8 @@
 // Desc: Wrapper of Error class
 
+const { dialog } = require( 'electron' );
 
-class ErrorWrapper extends Error
+export class ErrorWrapper extends Error
 {
 	errorPath: string;
 	constructor( errorPath: string )

@@ -1,8 +1,12 @@
 // Desc: Main process of the app
+//@ts-check
+'use strict';
 
 // Modules
-const { app, BrowserWindow } = require('electron')
-//const { MarkdownViewer } = require( './mainProcess' );
+const { app, BrowserWindow } = require('electron');
+
+// Classes
+import { MarkdownViewer } from './mainProcess';
 
 // Main deal
 
@@ -33,18 +37,22 @@ app.on( 'activate', async () => {
 
 async function createWindow( app: any )
 {
-	try
-	{
-		// create main process instance
-		const mainIns = new MarkdownViewer( app );
-		mainIns.init();
-		await mainIns.handleMain();
-		mainIns.handleCreateWindow();
-	}
-	catch( error )
-	{
-		console.error( error );
-	}
+	const mainIns: any = new MarkdownViewer( app );
+	mainIns.init();
+	await mainIns.handleMain();
+	mainIns.handleCreateWindow();
+	//try
+	//{
+	//	// create main process instance
+	//	const mainIns: any = new MarkdownViewer( app );
+	//	mainIns.init();
+	//	await mainIns.handleMain();
+	//	mainIns.handleCreateWindow();
+	//}
+	//catch( error )
+	//{
+	//	console.error( error );
+	//}
 }
 
 

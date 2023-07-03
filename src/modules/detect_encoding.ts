@@ -1,5 +1,6 @@
 // Desc: detect file encoding
 
+const fs = require( 'fs' );
 const jschardet = require( 'jschardet' );
 
 

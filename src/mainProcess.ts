@@ -2,15 +2,22 @@
 //@ts-check
 'use strict';
 
-const fs = require( 'fs' );
-const path = require( 'path' );
 const { dialog, ipcMain } = require('electron')
 
+// Modules
+const{ getDirectory } = require( './modules/get_directory' );
+const { ErrorWrapper } = require( './modules/error' );
+const { insertHTML } = require( './modules/insert_to_template' );
+const { parseMD } = require( './modules/parse_md' );
+const { ExportPDF } = require( './modules/export_pdf' );
+const { getFilePath } = require( './modules/get_filepath' );
+const { getFileEncoding } = require( './modules/detect_encoding' );
+const { getFileContent } = require( './modules/get_file_content' );
 
 
 // MarkdownViewerClass
 
-class MarkdownViewer
+export class MarkdownViewer
 {
 	currentDir: string;
 	templatePath: string;
@@ -253,6 +260,7 @@ class MarkdownViewer
 
 // ####################################################################################################
 
+module.exports = MarkdownViewer;
 
 
 

@@ -81,7 +81,7 @@
 		"yauzl": "^2.10.0"
 	},
 	"scripts": {
-		"start": "electron . --no-sandbox",
+		"start": "electron dist --no-sandbox",
 		"lint": "./node_modules/.bin/eslint .",
 		"test": "./node_modules/.bin/jest"
 	},

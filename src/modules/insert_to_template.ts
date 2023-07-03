@@ -1,7 +1,7 @@
 // Desc: Insert html string to template html
 
 
-function insertHTML( html: string, templatePath: string, outputPath: string )
+export function insertHTML( html: string, templatePath: string, outputPath: string )
 {
 	const template = fs.readFileSync( templatePath, 'utf-8' );
 

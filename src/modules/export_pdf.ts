@@ -1,7 +1,8 @@
 // Desc: export PDF
 
+const { dialog } = require('electron');
 
-async function ExportPDF( mainWindow: any )
+export async function ExportPDF( mainWindow: any )
 {
 	const filePath = await selectFilePath();
 	const options = {
