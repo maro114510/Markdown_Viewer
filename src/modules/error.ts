@@ -1,10 +1,9 @@
 // Desc: Wrapper of Error class
 
-const fs = require( 'fs' );
-const { dialog } = require( 'electron' );
 
 class ErrorWrapper extends Error
 {
+	errorPath: string;
 	constructor()
 	{
 		super( ...arguments );
@@ -16,25 +15,25 @@ class ErrorWrapper extends Error
 			configurable: true
 		} );
 
-		this.errorPath = "./log/error.log"
+		this.errorPath = "";
 	}
 
 	/**
 	 * main processでエラーが発生したときに呼び出す
 	 * エラーログをファイルに出力し、エラーダイアログを表示する
 	 */
-	errorMain( error )
+	errorMain( error: Error )
 	{
 		this.errorLog( error );
 
 		const message = error.message;
-		const detail = error.detail;
+		const stack = error.stack;
 
 		dialog.showErrorBox(
 			{
 				title: "Error",
 				content: "An error has occurred.",
-				detail: `${message}\n${detail}`
+				detail: `${message}\n${stack}`
 			}
 		);
 	}
@@ -46,17 +45,16 @@ class ErrorWrapper extends Error
 	 * detail
 	 * fileName
 	 */
-	errorLog( error )
+	errorLog( error: Error )
 	{
 		const name = error.name;
 		const message = error.message;
-		const detail = error.detail;
-		const fileName = error.fileName;
+		const stack = error.stack;
 
 		//現在日付時刻とエラーの情報をすべてエラーログに出力する
 		//YYYY-MM-DD HH:mm:ss [name] message
 		const now = new Date();
-		const log = `${now.toISOString()} [${name}] ${message}:${detail}:${fileName}\n`;
+		const log = `${now.toISOString()} [${name}] ${message}:${stack}\n`;
 
 		//エラーログをファイルに出力する
 		fs.appendFileSync( this.errorPath, log );
