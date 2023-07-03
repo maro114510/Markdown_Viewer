@@ -7,10 +7,8 @@ const path = require( 'path' );
 const { dialog, ipcMain } = require('electron')
 
 // Desc: Get file path from user
-const { getFilePath } = require( './modules/get_filepath' );
 const { getFileEncoding } = require( './modules/detect_encoding' );
 const { getFileContent } = require( './modules/get_file_content' );
-const { insertHTML } = require( './modules/insert_to_template' );
 const { ExportPDF } = require( './modules/export_pdf' );
 //const { ErrorWrapper } = require( './modules/error' );
 const { getDirectory } = require( './modules/get_directory' );

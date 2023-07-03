@@ -1,8 +1,7 @@
 // Desc: Get file path from user
 
-const fs = require( 'fs' ).promises;
 
-function getFilePath( dialog )
+function getFilePath( dialog: any )
 {
 	return new Promise( ( resolve, reject ) => {
 		dialog
@@ -11,7 +10,7 @@ function getFilePath( dialog )
 				properties: [ 'openFile' ]
 			}
 		)
-		.then( result => {
+		.then( ( result: any ) => {
 			if ( !result.canceled ) {
 				const filePath = result.filePaths[ 0 ];
 
@@ -20,13 +19,13 @@ function getFilePath( dialog )
 					.catch( error => reject( error ) );
 			}
 		})
-		.catch( error => {
+		.catch( ( error: Error ) => {
 			reject( error );
 		});
 	});
 }
 
-async function validateFilePath( filePath )
+async function validateFilePath( filePath: string )
 {
 	try
 	{
@@ -45,7 +44,7 @@ async function validateFilePath( filePath )
 	}
 }
 
-function isValidFileExtension( filePath )
+function isValidFileExtension( filePath: string )
 {
 	// FIXME: ファイル選択ダイアログの標準フィルターを使うようにする
 	const validExtensions = [
@@ -69,7 +68,7 @@ function isValidFileExtension( filePath )
 	return validExtensions.includes( fileExtension );
 }
 
-function getFileExtension( filePath )
+function getFileExtension( filePath: string )
 {
 	const extIndex = filePath.lastIndexOf( '.') ;
 	return filePath.slice( extIndex ).toLowerCase();

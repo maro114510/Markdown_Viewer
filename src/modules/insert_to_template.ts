@@ -1,8 +1,7 @@
 // Desc: Insert html string to template html
 
-const fs = require( 'fs' );
 
-function insertHTML( html, templatePath, outputPath )
+function insertHTML( html: string, templatePath: string, outputPath: string )
 {
 	const template = fs.readFileSync( templatePath, 'utf-8' );
 
