@@ -32,7 +32,7 @@ app.on( 'activate', async () => {
 
 // functions
 
-async function createWindow( app )
+async function createWindow( app: any )
 {
 	try
 	{
