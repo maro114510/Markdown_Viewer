@@ -6,8 +6,6 @@ const fs = require( 'fs' );
 const path = require( 'path' );
 const { dialog, ipcMain } = require('electron')
 
-// Desc: Get file path from user
-const { getFileEncoding } = require( './modules/detect_encoding' );
 
 
 // MarkdownViewerClass
@@ -18,6 +16,7 @@ class MarkdownViewer
 	templatePath: string;
 	watchFilesPath: string[];
 	outputsPath: string[];
+	logFilePath: string;
 	mainWindow: any;
 	rendererApp: any;
 	app: any;
@@ -33,6 +32,7 @@ class MarkdownViewer
 
 		this.rendererApp = null;
 		this.app = app;
+		this.logFilePath = "";
 
 		this.handleExportButton();
 		this.getChooseFile();
@@ -48,6 +48,8 @@ class MarkdownViewer
 		{
 			this.currentDir = __dirname;
 		}
+		this.logFilePath = path.join( this.currentDir, "log", "error.log" );
+		const ErrIns = new ErrorWrapper( this.logFilePath );
 
 		this.templatePath = path.join( this.currentDir, "html", "index.html" );
 		this.outputsPath.push(
@@ -57,7 +59,7 @@ class MarkdownViewer
 		this.rendererApp = new RendererApp( this.mainWindow );
 	}
 
-	async handleLoad( encoding = "utf8" )
+	async handleLoad( encoding: string = "utf8" )
 	{
 		const fileContent: string = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
 		const html = this.handleMarkdown( fileContent );
@@ -94,7 +96,7 @@ class MarkdownViewer
 		try
 		{
 			const encoding = await getFileEncoding( filePath );
-			return encoding;
+			return encoding as string;
 		}
 		catch( error )
 		{
@@ -226,7 +228,7 @@ class MarkdownViewer
 		ipcMain.on( 'choose_file', async ( event: any, arg: string ) => {
 			console.log( arg );
 			const filePath = arg;
-			const encoding = await this.handleGetFileEncoding( filePath );
+			const encoding: string = await this.handleGetFileEncoding( filePath );
 			const fileContent = await this.handleGetFileContent( filePath, encoding );
 			const html = this.handleMarkdown( fileContent );
 			this.handleInsertHTML( html );

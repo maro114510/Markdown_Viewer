@@ -4,7 +4,7 @@
 class ErrorWrapper extends Error
 {
 	errorPath: string;
-	constructor()
+	constructor( errorPath: string )
 	{
 		super( ...arguments );
 
@@ -15,7 +15,7 @@ class ErrorWrapper extends Error
 			configurable: true
 		} );
 
-		this.errorPath = "";
+		this.errorPath = errorPath;
 	}
 
 	/**
