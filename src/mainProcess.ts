@@ -8,7 +8,6 @@ const { dialog, ipcMain } = require('electron')
 
 // Desc: Get file path from user
 const { getFileEncoding } = require( './modules/detect_encoding' );
-const { ExportPDF } = require( './modules/export_pdf' );
 
 
 // MarkdownViewerClass
@@ -153,7 +152,6 @@ class MarkdownViewer
 			{
 				ExportPDF(
 					this.mainWindow,
-					dialog
 				);
 			}
 			else
