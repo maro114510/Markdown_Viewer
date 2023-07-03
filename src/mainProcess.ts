@@ -8,7 +8,6 @@ const { dialog, ipcMain } = require('electron')
 
 // Desc: Get file path from user
 const { getFileEncoding } = require( './modules/detect_encoding' );
-const { getFileContent } = require( './modules/get_file_content' );
 const { ExportPDF } = require( './modules/export_pdf' );
 //const { ErrorWrapper } = require( './modules/error' );
 const { getDirectory } = require( './modules/get_directory' );
@@ -63,7 +62,7 @@ class MarkdownViewer
 
 	async handleLoad( encoding = "utf8" )
 	{
-		const fileContent = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
+		const fileContent: string = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
 		const html = this.handleMarkdown( fileContent );
 		this.handleInsertHTML( html );
 
@@ -111,7 +110,7 @@ class MarkdownViewer
 		try
 		{
 			const fileContent = await getFileContent( filePath, encoding );
-			return fileContent;
+			return fileContent as string;
 		}
 		catch( error )
 		{
