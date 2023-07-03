@@ -16,7 +16,6 @@ const { ExportPDF } = require( './modules/export_pdf' );
 //const { ErrorWrapper } = require( './modules/error' );
 const { getDirectory } = require( './modules/get_directory' );
 
-const { RendererApp } = require( './renderer' );
 
 // MarkdownViewerClass
 
