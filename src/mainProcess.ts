@@ -1,28 +1,39 @@
 // Desc: App entry point
+//@ts-check
+'use strict';
 
 const fs = require( 'fs' );
 const path = require( 'path' );
 const { dialog, ipcMain } = require('electron')
 
-// Desc: Get file path from user
+// Modules
+const{ getDirectory } = require( './modules/get_directory' );
+const { ErrorWrapper } = require( './modules/error' );
+const { insertHTML } = require( './modules/insert_to_template' );
+const { parseMD } = require( './modules/parse_md' );
+const { ExportPDF } = require( './modules/export_pdf' );
 const { getFilePath } = require( './modules/get_filepath' );
 const { getFileEncoding } = require( './modules/detect_encoding' );
 const { getFileContent } = require( './modules/get_file_content' );
-const { parseMD } = require( './modules/parse_md' );
-const { insertHTML } = require( './modules/insert_to_template' );
-const { ExportPDF } = require( './modules/export_pdf' );
-//const { ErrorWrapper } = require( './modules/error' );
-const { getDirectory } = require( './modules/get_directory' );
-
 const { RendererApp } = require( './renderer' );
 
 // MarkdownViewerClass
 
 class MarkdownViewer
 {
-	constructor( app )
+	currentDir: string;
+	templatePath: string;
+	watchFilesPath: string[];
+	outputsPath: string[];
+	logFilePath: string;
+	mainWindow: any;
+	rendererApp: any;
+	app: any;
+
+	constructor( app: any )
 	{
 		this.currentDir = "";
+
 		this.templatePath = "";
 		this.watchFilesPath = [];
 		this.outputsPath = [];
@@ -30,6 +41,7 @@ class MarkdownViewer
 
 		this.rendererApp = null;
 		this.app = app;
+		this.logFilePath = "";
 
 		this.handleExportButton();
 		this.getChooseFile();
@@ -45,6 +57,8 @@ class MarkdownViewer
 		{
 			this.currentDir = __dirname;
 		}
+		this.logFilePath = path.join( this.currentDir, "log", "error.log" );
+		const ErrIns = new ErrorWrapper( this.logFilePath );
 
 		this.templatePath = path.join( this.currentDir, "html", "index.html" );
 		this.outputsPath.push(
@@ -54,9 +68,9 @@ class MarkdownViewer
 		this.rendererApp = new RendererApp( this.mainWindow );
 	}
 
-	async handleLoad( encoding = "utf8" )
+	async handleLoad( encoding: string = "utf8" )
 	{
-		const fileContent = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
+		const fileContent: string = await this.handleGetFileContent( this.watchFilesPath[ 0 ], encoding );
 		const html = this.handleMarkdown( fileContent );
 		this.handleInsertHTML( html );
 
@@ -86,12 +100,12 @@ class MarkdownViewer
 		}
 	}
 
-	async handleGetFileEncoding( filePath )
+	async handleGetFileEncoding( filePath: string )
 	{
 		try
 		{
 			const encoding = await getFileEncoding( filePath );
-			return encoding;
+			return encoding as string;
 		}
 		catch( error )
 		{
@@ -99,12 +113,12 @@ class MarkdownViewer
 		}
 	}
 
-	async handleGetFileContent( filePath, encoding )
+	async handleGetFileContent( filePath: string, encoding: string )
 	{
 		try
 		{
 			const fileContent = await getFileContent( filePath, encoding );
-			return fileContent;
+			return fileContent as string;
 		}
 		catch( error )
 		{
@@ -112,7 +126,7 @@ class MarkdownViewer
 		}
 	}
 
-	handleMarkdown( fileContent )
+	handleMarkdown( fileContent: string )
 	{
 		try
 		{
@@ -121,11 +135,11 @@ class MarkdownViewer
 		}
 		catch( error )
 		{
-			this.Err.errorMain( error );
+			this.errorWrap( error );
 		}
 	}
 
-	handleInsertHTML( html )
+	handleInsertHTML( html: string )
 	{
 		try
 		{
@@ -149,7 +163,6 @@ class MarkdownViewer
 			{
 				ExportPDF(
 					this.mainWindow,
-					dialog
 				);
 			}
 			else
@@ -163,12 +176,12 @@ class MarkdownViewer
 		}
 	}
 
-	handleWatchFileChanges( filePath )
+	handleWatchFileChanges( filePath: string )
 	{
 		try
 		{
 			let isWatching = true;
-			fs.watch( filePath, ( eventType ) => {
+			fs.watch( filePath, ( eventType: any ) => {
 				if( eventType === "change" && isWatching )
 				{
 					isWatching = false;
@@ -212,7 +225,7 @@ class MarkdownViewer
 		}
 	}
 
-	async sendDirectoryInfo( directory )
+	async sendDirectoryInfo( directory: any )
 	{
 		ipcMain.handle( 'get_directory', () => {
 			return directory;
@@ -221,10 +234,10 @@ class MarkdownViewer
 
 	getChooseFile()
 	{
-		ipcMain.on( 'choose_file', async ( event, arg ) => {
+		ipcMain.on( 'choose_file', async ( event: any, arg: string ) => {
 			console.log( arg );
 			const filePath = arg;
-			const encoding = await this.handleGetFileEncoding( filePath );
+			const encoding: string = await this.handleGetFileEncoding( filePath );
 			const fileContent = await this.handleGetFileContent( filePath, encoding );
 			const html = this.handleMarkdown( fileContent );
 			this.handleInsertHTML( html );
@@ -235,13 +248,12 @@ class MarkdownViewer
 		});
 	}
 
-	errorWrap( error )
+	errorWrap( error: Error )
 	{
 		console.log( error );
 		dialog.showErrorBox(
 			error.name,
 			error.message,
-			error.stack
 		);
 	}
 }
@@ -249,9 +261,7 @@ class MarkdownViewer
 
 // ####################################################################################################
 
-module.exports = {
-	MarkdownViewer
-}
+export { MarkdownViewer };
 
 
 

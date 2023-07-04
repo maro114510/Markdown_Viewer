@@ -1,10 +1,10 @@
 // Desc: Open directory
+//@ts-check
+'use strict';
 
-// Modules
-const { dialog } = require( 'electron' );
 const fs = require( 'fs' );
 const path = require( 'path' );
-
+const { dialog } = require( 'electron' );
 
 // Main deal
 
@@ -19,17 +19,21 @@ function getDirectory()
 	return directory;
 }
 
-function readDirectoryRecursively( dirPath )
+function readDirectoryRecursively( dirPath: string )
 {
 	const files = fs.readdirSync( dirPath );
 
-	const directory = {
+	const directory: {
+		path: string;
+		files: string[];
+		directories: any[];
+	} = {
 		path: dirPath,
 		files: [],
 		directories: []
 	};
 
-	files.forEach( file => {
+	files.forEach( ( file: string ) => {
 		const filePath = path.join( dirPath, file );
 		const stat = fs.statSync( filePath );
 
@@ -52,11 +56,7 @@ function readDirectoryRecursively( dirPath )
 	return directory;
 }
 
-
-// Exports
-module.exports = {
-	getDirectory
-};
+export { getDirectory };
 
 
 
