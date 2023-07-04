@@ -1,4 +1,6 @@
 // Desc: Insert html string to template html
+//@ts-check
+'use strict';
 
 const fs = require( 'fs' );
 

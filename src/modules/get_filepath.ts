@@ -1,4 +1,6 @@
 // Desc: Get file path from user
+//@ts-check
+'use strict';
 
 const fs = require( 'fs' );
 

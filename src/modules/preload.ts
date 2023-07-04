@@ -1,4 +1,6 @@
 // Desc: preload.js
+//@ts-check
+'use strict';
 
 const { contextBridge, ipcRenderer } = require( 'electron' );
 

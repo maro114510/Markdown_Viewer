@@ -1,4 +1,6 @@
 // Desc: Wrapper of Error class
+//@ts-check
+'use strict';
 
 const fs = require( 'fs' );
 const { dialog } = require( 'electron' );

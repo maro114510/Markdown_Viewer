@@ -1,4 +1,6 @@
 // Desc: detect file encoding
+//@ts-check
+'use strict';
 
 const fs = require( 'fs' );
 const jschardet = require( 'jschardet' );

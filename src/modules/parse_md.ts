@@ -1,4 +1,6 @@
 // Desc: Parse markdown
+//@ts-check
+'use strict';
 
 const { marked } = require( 'marked' );
 const { highlight, highlightAuto } = require( 'highlight.js' );
