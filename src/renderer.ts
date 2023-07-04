@@ -1,17 +1,20 @@
 // Desc: render markdown to html
+//@ts-check
+'use strict';
 
+import { BrowserWindow } from 'electron';
 const path = require( 'path' );
-const { BrowserWindow } = require( 'electron' );
 
 class RendererApp
 {
-	constructor( mainWindow )
+	mainWindow: any;
+	constructor( mainWindow: any )
 	{
 		console.log( "RendererApp" );
 		this.mainWindow = mainWindow;
 	}
 
-	async createWindow( outputPath, watchFilePath )
+	async createWindow( outputPath: string, watchFilePath: string )
 	{
 		const WIDTH = 1300;
 		const HEIGHT = 800;
@@ -52,7 +55,7 @@ class RendererApp
 		return this.mainWindow;
 	}
 
-	async loadWindow( outputPath )
+	async loadWindow( outputPath: string )
 	{
 		this.mainWindow.loadURL(
 			'file://' + outputPath
@@ -60,8 +63,7 @@ class RendererApp
 	}
 }
 
-module.exports = { RendererApp };
-
+export { RendererApp };
 
 
 // End of Script
