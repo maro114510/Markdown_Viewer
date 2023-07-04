@@ -3,7 +3,7 @@
 const fs = require( 'fs' );
 const { dialog } = require( 'electron' );
 
-export class ErrorWrapper extends Error
+class ErrorWrapper extends Error
 {
 	errorPath: string;
 	constructor( errorPath: string )
@@ -61,7 +61,7 @@ export class ErrorWrapper extends Error
 }
 
 
-module.exports = { ErrorWrapper };
+export { ErrorWrapper };
 
 
 

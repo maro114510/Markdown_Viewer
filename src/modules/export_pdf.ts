@@ -3,7 +3,7 @@
 const fs = require( 'fs' );
 const { dialog } = require('electron');
 
-export async function ExportPDF( mainWindow: any )
+async function ExportPDF( mainWindow: any )
 {
 	const filePath = await selectFilePath();
 	const options = {
@@ -89,7 +89,7 @@ async function changeBar( mainWindow: any, bool: boolean )
 }
 
 
-module.exports = { ExportPDF };
+export { ExportPDF };
 
 
 

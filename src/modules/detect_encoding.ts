@@ -4,7 +4,7 @@ const fs = require( 'fs' );
 const jschardet = require( 'jschardet' );
 
 
-export function getFileEncoding( filePath: string )
+function getFileEncoding( filePath: string )
 {
 	return new Promise( ( resolve, reject ) => {
 		fs.readFile( filePath, ( err: Error, data: string ) => {
@@ -28,6 +28,7 @@ function detectEncoding( data: any )
 	return encoding;
 }
 
+export { getFileEncoding };
 
 
 

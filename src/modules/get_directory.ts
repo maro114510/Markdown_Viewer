@@ -6,7 +6,7 @@ const { dialog } = require( 'electron' );
 
 // Main deal
 
-export function getDirectory()
+function getDirectory()
 {
 	const dirPath = dialog.showOpenDialogSync( {
 		properties: [ 'openDirectory' ]
@@ -54,11 +54,7 @@ function readDirectoryRecursively( dirPath: string )
 	return directory;
 }
 
-
-// Exports
-module.exports = {
-	getDirectory
-};
+export { getDirectory };
 
 
 

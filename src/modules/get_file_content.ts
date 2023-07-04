@@ -2,7 +2,7 @@
 
 const fs = require( 'fs' );
 
-export function getFileContent( filePath: string, encoding: string )
+function getFileContent( filePath: string, encoding: string )
 {
 	return new Promise( ( resolve, reject ) => {
 		fs.readFile( filePath, encoding, ( error: Error, data: string ) => {
@@ -15,7 +15,7 @@ export function getFileContent( filePath: string, encoding: string )
 	});
 }
 
-module.exports = { getFileContent };
+export { getFileContent };
 
 
 // End of script

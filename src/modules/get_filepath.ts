@@ -2,7 +2,7 @@
 
 const fs = require( 'fs' );
 
-export function getFilePath( dialog: any )
+function getFilePath( dialog: any )
 {
 	return new Promise( ( resolve, reject ) => {
 		dialog
@@ -76,7 +76,7 @@ function getFileExtension( filePath: string )
 }
 
 
-module.exports = { getFilePath };
+export { getFilePath };
 
 
 // End of script

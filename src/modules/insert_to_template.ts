@@ -2,7 +2,7 @@
 
 const fs = require( 'fs' );
 
-export function insertHTML( html: string, templatePath: string, outputPath: string )
+function insertHTML( html: string, templatePath: string, outputPath: string )
 {
 	const template = fs.readFileSync( templatePath, 'utf-8' );
 
@@ -25,7 +25,7 @@ export function insertHTML( html: string, templatePath: string, outputPath: stri
 	fs.writeFileSync( outputPath, newHTML );
 }
 
-
+export { insertHTML };
 
 
 

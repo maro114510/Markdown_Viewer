@@ -5,7 +5,7 @@
 import { BrowserWindow } from 'electron';
 const path = require( 'path' );
 
-export class RendererApp
+class RendererApp
 {
 	mainWindow: any;
 	constructor( mainWindow: any )
@@ -63,6 +63,7 @@ export class RendererApp
 	}
 }
 
+export { RendererApp };
 
 
 // End of Script
