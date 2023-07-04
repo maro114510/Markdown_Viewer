@@ -17,7 +17,7 @@ const { getFileContent } = require( './modules/get_file_content' );
 
 // MarkdownViewerClass
 
-export class MarkdownViewer
+class MarkdownViewer
 {
 	currentDir: string;
 	templatePath: string;
@@ -260,7 +260,7 @@ export class MarkdownViewer
 
 // ####################################################################################################
 
-module.exports = MarkdownViewer;
+export { MarkdownViewer };
 
 
 
