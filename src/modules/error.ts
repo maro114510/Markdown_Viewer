@@ -1,5 +1,6 @@
 // Desc: Wrapper of Error class
 
+const fs = require( 'fs' );
 const { dialog } = require( 'electron' );
 
 export class ErrorWrapper extends Error
@@ -31,11 +32,8 @@ export class ErrorWrapper extends Error
 		const stack = error.stack;
 
 		dialog.showErrorBox(
-			{
-				title: "Error",
-				content: "An error has occurred.",
-				detail: `${message}\n${stack}`
-			}
+			message,
+			stack,
 		);
 	}
 

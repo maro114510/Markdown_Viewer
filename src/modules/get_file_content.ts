@@ -1,5 +1,6 @@
 // Desc: get file content
 
+const fs = require( 'fs' );
 
 export function getFileContent( filePath: string, encoding: string )
 {

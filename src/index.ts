@@ -6,7 +6,7 @@
 const { app, BrowserWindow } = require('electron');
 
 // Classes
-const { MarkdownViewer } = require( './mainProcess' );
+import { MarkdownViewer } from './mainProcess';
 
 // Main deal
 

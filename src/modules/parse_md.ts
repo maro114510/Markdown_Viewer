@@ -4,7 +4,7 @@ const { marked } = require( 'marked' );
 const { highlight, highlightAuto } = require( 'highlight.js' );
 const { getLanguage } = require( 'highlight.js' );
 
-function parseMD( str: string )
+export function parseMD( str: string )
 {
 	settingHighlightOption();
 

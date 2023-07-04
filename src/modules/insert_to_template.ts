@@ -1,5 +1,6 @@
 // Desc: Insert html string to template html
 
+const fs = require( 'fs' );
 
 export function insertHTML( html: string, templatePath: string, outputPath: string )
 {
@@ -25,7 +26,6 @@ export function insertHTML( html: string, templatePath: string, outputPath: stri
 }
 
 
-module.exports = { insertHTML };
 
 
 

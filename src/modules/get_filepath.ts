@@ -1,5 +1,6 @@
 // Desc: Get file path from user
 
+const fs = require( 'fs' );
 
 export function getFilePath( dialog: any )
 {

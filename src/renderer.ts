@@ -2,9 +2,10 @@
 //@ts-check
 'use strict';
 
+import { BrowserWindow } from 'electron';
 const path = require( 'path' );
 
-class RendererApp
+export class RendererApp
 {
 	mainWindow: any;
 	constructor( mainWindow: any )

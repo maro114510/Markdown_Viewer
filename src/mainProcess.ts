@@ -2,6 +2,8 @@
 //@ts-check
 'use strict';
 
+const fs = require( 'fs' );
+const path = require( 'path' );
 const { dialog, ipcMain } = require('electron')
 
 // Modules
@@ -13,7 +15,7 @@ const { ExportPDF } = require( './modules/export_pdf' );
 const { getFilePath } = require( './modules/get_filepath' );
 const { getFileEncoding } = require( './modules/detect_encoding' );
 const { getFileContent } = require( './modules/get_file_content' );
-
+const { RendererApp } = require( './renderer' );
 
 // MarkdownViewerClass
 
@@ -252,7 +254,6 @@ class MarkdownViewer
 		dialog.showErrorBox(
 			error.name,
 			error.message,
-			error.stack
 		);
 	}
 }

@@ -1,5 +1,7 @@
 // Desc: Open directory
 
+const fs = require( 'fs' );
+const path = require( 'path' );
 const { dialog } = require( 'electron' );
 
 // Main deal

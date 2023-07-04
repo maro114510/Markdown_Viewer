@@ -1,5 +1,6 @@
 // Desc: export PDF
 
+const fs = require( 'fs' );
 const { dialog } = require('electron');
 
 export async function ExportPDF( mainWindow: any )
