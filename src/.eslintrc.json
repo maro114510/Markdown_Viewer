@@ -17,6 +17,7 @@
     "rules": {
     },
 	"ignorePatterns": [
-		"__test__/**/*"
+		"__test__/**/*",
+		"html/**/*"
 	]
 }
