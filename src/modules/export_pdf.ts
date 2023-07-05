@@ -1,10 +1,13 @@
 // Desc: export PDF
+//@ts-check
+'use strict';
 
-const fs = require( 'fs');
+const fs = require( 'fs' );
+const { dialog } = require('electron');
 
-async function ExportPDF( mainWindow, dialog )
+async function ExportPDF( mainWindow: any )
 {
-	const filePath = await selectFilePath( dialog );
+	const filePath = await selectFilePath();
 	const options = {
 		margins: {
 			top: 0,
@@ -23,8 +26,8 @@ async function ExportPDF( mainWindow, dialog )
 		{
 			await changeBar( mainWindow, true );
 			mainWindow.webContents.printToPDF( options )
-			.then( data => {
-				fs.writeFile( filePath, data, ( error ) => {
+			.then( ( data: any ) => {
+				fs.writeFile( filePath, data, ( error: Error ) => {
 					if( error )
 					{
 						throw error;
@@ -47,7 +50,7 @@ async function ExportPDF( mainWindow, dialog )
 }
 
 
-async function selectFilePath( dialog )
+async function selectFilePath()
 {
 	// デフォルトのパスを指定しつつ出力するファイルのフルパスを指定する
 	// 非同期にしないとオブジェクトを渡してしまう
@@ -61,10 +64,10 @@ async function selectFilePath( dialog )
 				]
 			}
 		)
-		.then( result => {
+		.then( ( result: any ) => {
 			resolve( result.filePath );
 		})
-		.catch( error => {
+		.catch( ( error: Error ) => {
 			reject(error);
 		});
 	});
@@ -72,7 +75,7 @@ async function selectFilePath( dialog )
 
 
 
-async function changeBar( mainWindow, bool )
+async function changeBar( mainWindow: any, bool: boolean )
 {
 	if( bool )
 	{
@@ -88,7 +91,7 @@ async function changeBar( mainWindow, bool )
 }
 
 
-module.exports = { ExportPDF };
+export { ExportPDF };
 
 
 

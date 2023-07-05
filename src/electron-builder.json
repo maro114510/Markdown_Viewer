@@ -6,6 +6,7 @@
 	},
 	"files": [
 		"index.js",
+		"*.js",
 		"package.json",
 		"modules/**/*",
 		{
@@ -15,9 +16,25 @@
 	],
 	"extraResources": [
 		{
-		"from": "html",
-		"to": "html",
-		"filter": ["**/*"]
+			"from": "html",
+			"to": "html",
+			"filter": ["**/*"]
 		}
-	]
+	],
+	"buildVersion": "1.0.0",
+	"mac": {
+		"category": "public.app-category.developer-tools",
+		"target": [
+			"dmg",
+			"zip"
+		],
+		"icon": "./assets/app.icns"
+	},
+	"win": {
+		"target": [
+			"nsis",
+			"zip"
+		],
+		"icon": "./assets/app.ico"
+	}
 }
