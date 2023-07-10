@@ -26,7 +26,6 @@ def func():
 class Class:
 	def __init__(self):
 		print("hello world")
-	
 ```
 
 [link](https://google.com)

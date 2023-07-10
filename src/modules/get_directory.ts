@@ -4,11 +4,10 @@
 
 const fs = require( 'fs' );
 const path = require( 'path' );
-const { dialog } = require( 'electron' );
 
 // Main deal
 
-function getDirectory()
+function getDirectory( dialog: any )
 {
 	const dirPath = dialog.showOpenDialogSync( {
 		properties: [ 'openDirectory' ]
