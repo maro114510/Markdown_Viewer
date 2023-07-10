@@ -16,17 +16,17 @@ document.addEventListener( "DOMContentLoaded", function () {
 window.onload = function ()
 {
 	main();
-	addAll();
-	cleanPage();
+	//addAll();
+	//cleanPage();
 };
 
 async function main()
 {
-	const MAX_PAGE_HEIGHT = 500;
+	const MAX_PAGE_HEIGHT = 100;
 	let pages = Array.from( document.querySelectorAll( ".page" ) );
 	const pageHeight = pages[ 0 ].clientHeight;
 
-	for( let index = 0; index < MAX_PAGE_HEIGHT && index < pages.length; index++ )
+	for( let index = 0; index < pages.length && index < MAX_PAGE_HEIGHT; index++ )
 	{
 		const page = pages[ index ];
 		let contentHeight = page.scrollHeight;
@@ -118,7 +118,7 @@ function cleanPage()
 	pages.forEach( function ( page ) {
 		if( page.clientHeight === 0 )
 		{
-			pages.removeChild( page );
+			page.parentNode.removeChild( page );
 		}
 	});
 }
