@@ -216,12 +216,12 @@ class MarkdownViewer
 	{
 		try
 		{
-			const directory = getDirectory();
+			const directory = getDirectory( dialog );
 			return directory;
 		}
 		catch( error )
 		{
-			this.errorWrap( error );;
+			this.errorWrap( error );
 		}
 	}
 
