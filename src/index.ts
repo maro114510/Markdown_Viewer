@@ -44,6 +44,7 @@ async function createWindow( app: any )
 		mainIns.init();
 		await mainIns.handleMain();
 		mainIns.handleCreateWindow();
+		mainIns.handleExportButton();
 	}
 	catch( error )
 	{

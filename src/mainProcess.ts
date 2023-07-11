@@ -43,7 +43,7 @@ class MarkdownViewer
 		this.app = app;
 		this.logFilePath = "";
 
-		this.handleExportButton();
+		//this.handleExportButton();
 		this.getChooseFile();
 	}
 
@@ -201,7 +201,10 @@ class MarkdownViewer
 
 	async handleCreateWindow()
 	{
-		this.mainWindow = await this.rendererApp.createWindow( this.outputsPath[ 0 ], this.watchFilesPath[ 0 ] );
+		this.mainWindow = await this.rendererApp.createWindow(
+			this.outputsPath[ 0 ],
+			this.watchFilesPath[ 0 ]
+		);
 	}
 
 	handleExportButton()
