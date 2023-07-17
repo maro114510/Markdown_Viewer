@@ -16,17 +16,19 @@ document.addEventListener( "DOMContentLoaded", function () {
 window.onload = function ()
 {
 	main();
-	//addAll();
-	//cleanPage();
+	addAll();
+	cleanPage();
 };
 
 async function main()
 {
-	const MAX_PAGE_HEIGHT = 100;
+	const MAX_PAGES = 100;
 	let pages = Array.from( document.querySelectorAll( ".page" ) );
 	const pageHeight = pages[ 0 ].clientHeight;
+	let pageCount = 0;
 
-	for( let index = 0; index < pages.length && index < MAX_PAGE_HEIGHT; index++ )
+	for( let index = 0; index < pages.length && pageCount < MAX_PAGES; index++ )
+	for( let index = 0; index < pages.length && pageCount < MAX_PAGES; index++ )
 	{
 		const page = pages[ index ];
 		let contentHeight = page.scrollHeight;
@@ -63,8 +65,14 @@ async function main()
 				newPage.appendChild( element );
 			});
 			page.parentNode.insertBefore( newPage, page.nextSibling );
+
+			await new Promise( function ( resolve ) {
+				setTimeout( resolve, 100 );
+			});
 		}
-		pages = Array.from( document.querySelectorAll( ".page" ) ); 
+		pages = Array.from( document.querySelectorAll( ".page" ) );
+		
+		pageCount++;
 	}
 }
 
