@@ -59,8 +59,13 @@ while getopts ":p:h-:" opt; do
 	esac
 done
 
-# Install dependencies
+
+# Compile the project
 cd "$PROJECT_DIR"
+echo "Compiling the project..."
+sh ./compile.sh
+
+# Install dependencies
 echo "Now is in $(pwd)"
 npm install
 
