@@ -5,9 +5,9 @@
 const fs = require( 'fs' );
 const { dialog } = require('electron');
 
-async function ExportPDF( mainWindow: any )
+async function ExportPDF( mainWindow: any, outPDFPath: string )
 {
-	const filePath = await selectFilePath();
+	const filePath = await selectFilePath( outPDFPath );
 	const options = {
 		margins: {
 			top: 0,
@@ -50,7 +50,7 @@ async function ExportPDF( mainWindow: any )
 }
 
 
-async function selectFilePath()
+async function selectFilePath( outPDFPath: string )
 {
 	// デフォルトのパスを指定しつつ出力するファイルのフルパスを指定する
 	// 非同期にしないとオブジェクトを渡してしまう
@@ -58,7 +58,7 @@ async function selectFilePath()
 		dialog.showSaveDialog(
 			{
 				title: 'Select output directory',
-				defaultPath: 'output.pdf',
+				defaultPath: outPDFPath + ".pdf",
 				filters: [
 					{ name: 'PDF', extensions: ['pdf'] }
 				]

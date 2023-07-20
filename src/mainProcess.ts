@@ -23,6 +23,7 @@ class MarkdownViewer
 {
 	currentDir: string;
 	templatePath: string;
+	outPDFPath: string;
 	watchFilesPath: string[];
 	outputsPath: string[];
 	logFilePath: string;
@@ -38,6 +39,7 @@ class MarkdownViewer
 		this.watchFilesPath = [];
 		this.outputsPath = [];
 		this.mainWindow = null;
+		this.outPDFPath = "";
 
 		this.rendererApp = null;
 		this.app = app;
@@ -163,6 +165,7 @@ class MarkdownViewer
 			{
 				ExportPDF(
 					this.mainWindow,
+					this.outPDFPath
 				);
 			}
 			else
@@ -238,7 +241,7 @@ class MarkdownViewer
 	getChooseFile()
 	{
 		ipcMain.on( 'choose_file', async ( event: any, arg: string ) => {
-			console.log( arg );
+			this.outPDFPath = path.basename( arg, path.extname( arg ) );
 			const filePath = arg;
 			const encoding: string = await this.handleGetFileEncoding( filePath );
 			const fileContent = await this.handleGetFileContent( filePath, encoding );
