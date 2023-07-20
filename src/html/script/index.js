@@ -27,8 +27,7 @@ async function main()
 	const pageHeight = pages[ 0 ].clientHeight;
 	let pageCount = 0;
 
-	for( let index = 0; index < pages.length && pageCount < MAX_PAGES; index++ )
-	for( let index = 0; index < pages.length && pageCount < MAX_PAGES; index++ )
+	for( let index = 0; index < pages.length; index++ )
 	{
 		const page = pages[ index ];
 		let contentHeight = page.scrollHeight;
@@ -71,7 +70,6 @@ async function main()
 			});
 		}
 		pages = Array.from( document.querySelectorAll( ".page" ) );
-		
 		pageCount++;
 	}
 }
