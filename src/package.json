@@ -48,7 +48,7 @@
 		"json-stringify-safe": "^5.0.1",
 		"jsonfile": "^6.1.0",
 		"keyv": "^4.5.2",
-		"lowercase-keys": "^2.0.0",
+		"lowercase-keys": "^3.0.0",
 		"lru-cache": "^6.0.0",
 		"marked": "^5.0.4",
 		"marked-gfm-heading-id": "^3.0.3",
