@@ -54,7 +54,7 @@
 		"marked-gfm-heading-id": "^3.0.3",
 		"marked-highlight": "^2.0.1",
 		"marked-mangle": "^1.0.1",
-		"matcher": "^3.0.0",
+		"matcher": "^5.0.0",
 		"mimic-response": "^1.0.1",
 		"ms": "^2.1.2",
 		"normalize-url": "^8.0.1",
