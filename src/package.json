@@ -28,7 +28,7 @@
 		"escape-string-regexp": "^5.0.0",
 		"extract-zip": "^2.0.1",
 		"fd-slicer": "^1.1.0",
-		"fs-extra": "^8.1.0",
+		"fs-extra": "^11.2.0",
 		"function-bind": "^1.1.1",
 		"get-intrinsic": "^1.2.1",
 		"get-stream": "^9.0.1",
