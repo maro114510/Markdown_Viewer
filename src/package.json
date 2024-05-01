@@ -49,7 +49,7 @@
 		"jsonfile": "^6.1.0",
 		"keyv": "^4.5.2",
 		"lowercase-keys": "^2.0.0",
-		"lru-cache": "^6.0.0",
+		"lru-cache": "^10.2.2",
 		"marked": "^12.0.1",
 		"marked-gfm-heading-id": "^3.0.3",
 		"marked-highlight": "^2.0.1",
