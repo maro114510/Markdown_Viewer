@@ -4,7 +4,7 @@ updates:
     directory: "/src"
     schedule:
       interval: "monthly"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 5
     reviewers:
       - "maro114510"
     assignees:
