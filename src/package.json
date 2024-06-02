@@ -55,7 +55,7 @@
 		"marked-highlight": "^2.0.1",
 		"marked-mangle": "^1.0.1",
 		"matcher": "^5.0.0",
-		"mimic-response": "^1.0.1",
+		"mimic-response": "^4.0.0",
 		"ms": "^2.1.2",
 		"normalize-url": "^8.0.1",
 		"object-keys": "^1.1.1",
