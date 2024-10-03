@@ -122,7 +122,8 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+src/dist/*
+!src/dist/.gitkeep
 
 # Gatsby files
 .cache/
@@ -172,6 +173,8 @@ dist
 
 ### project ###
 src/html/output.html
+src/log/*
+!src/log/.gitkeep
 
 
 ### others ###

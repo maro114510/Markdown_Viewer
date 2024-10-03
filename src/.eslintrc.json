@@ -15,5 +15,8 @@
     "plugins": [
     ],
     "rules": {
-    }
+    },
+	"ignorePatterns": [
+		"__test__/**/*"
+	]
 }

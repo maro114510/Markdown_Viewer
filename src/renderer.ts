@@ -1,22 +1,20 @@
 // Desc: render markdown to html
+//@ts-check
+'use strict';
 
+import { BrowserWindow } from 'electron';
 const path = require( 'path' );
-const { BrowserWindow } = require( 'electron' );
 
 class RendererApp
 {
-	constructor( mainWindow )
+	mainWindow: any;
+	constructor( mainWindow: any )
 	{
 		console.log( "RendererApp" );
 		this.mainWindow = mainWindow;
 	}
 
-	async init()
-	{
-		console.log( "RendererApp.init" );
-	}
-
-	async createWindow( outputPath )
+	async createWindow( outputPath: string, watchFilePath: string )
 	{
 		const WIDTH = 1300;
 		const HEIGHT = 800;
@@ -28,6 +26,9 @@ class RendererApp
 				nodeIntegration: false,
 				contextIsolation: true,
 				sandbox: true,
+				devTools: true,
+				preload: path.join( __dirname, "modules", "preload.js" ),
+				javascript: true,
 			}
 		});
 
@@ -35,17 +36,26 @@ class RendererApp
 
 		this.mainWindow.on( 'closed', () => {
 			this.mainWindow = null;
-		}
-		);
-		
+		});
+
+		this.mainWindow.webContents.openDevTools();
 		this.mainWindow.webContents.on( 'did-finish-load', () => {
-			const fileName = path.basename( outputPath );
+			let fileName = "";
+			if( watchFilePath === undefined || watchFilePath === "" )
+			{
+				fileName = "Markdown Viewer";
+			}
+			else
+			{
+				fileName = path.basename( watchFilePath );
+			}
 			this.mainWindow.setTitle( fileName );
-		}
-		);
+		});
+
+		return this.mainWindow;
 	}
-	
-	async loadWindow( outputPath )
+
+	async loadWindow( outputPath: string )
 	{
 		this.mainWindow.loadURL(
 			'file://' + outputPath
@@ -53,8 +63,7 @@ class RendererApp
 	}
 }
 
-module.exports = { RendererApp };
-
+export { RendererApp };
 
 
 // End of Script

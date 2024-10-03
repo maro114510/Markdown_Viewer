@@ -1,8 +1,10 @@
 // Desc: Insert html string to template html
+//@ts-check
+'use strict';
 
 const fs = require( 'fs' );
 
-function insertHTML( html, templatePath, outputPath )
+function insertHTML( html: string, templatePath: string, outputPath: string )
 {
 	const template = fs.readFileSync( templatePath, 'utf-8' );
 
@@ -25,8 +27,7 @@ function insertHTML( html, templatePath, outputPath )
 	fs.writeFileSync( outputPath, newHTML );
 }
 
-
-module.exports = { insertHTML };
+export { insertHTML };
 
 
 

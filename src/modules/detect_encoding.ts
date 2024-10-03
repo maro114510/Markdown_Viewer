@@ -1,13 +1,15 @@
 // Desc: detect file encoding
+//@ts-check
+'use strict';
 
 const fs = require( 'fs' );
 const jschardet = require( 'jschardet' );
 
 
-function getFileEncoding( filePath )
+function getFileEncoding( filePath: string )
 {
 	return new Promise( ( resolve, reject ) => {
-		fs.readFile( filePath, ( err, data ) => {
+		fs.readFile( filePath, ( err: Error, data: string ) => {
 			if( err )
 			{
 				reject( err );
@@ -21,21 +23,14 @@ function getFileEncoding( filePath )
 	});
 }
 
-function detectEncoding( data )
+function detectEncoding( data: any )
 {
-	try
-	{
-		const encoding = jschardet.detect( data ).encoding;
-		return encoding;
-	}
-	catch( error )
-	{
-		throw error;
-	}
+	const detected = jschardet.detect( data );
+	const encoding = detected.encoding;
+	return encoding;
 }
 
-
-module.exports = { getFileEncoding };
+export { getFileEncoding };
 
 
 

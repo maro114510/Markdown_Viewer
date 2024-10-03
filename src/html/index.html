@@ -9,28 +9,33 @@
 	<!-- highlight.js -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
 
-	<!--  -->
 	<script src="./script/index.js"></script>
 	<link rel="stylesheet" href="./styles/style.css">
 </head>
 
 <body>
-	<div class="left_directory side_content">
-		<ul>
-			<li>morimori</li>
-			<ul>
-				<li>mm</li>
-			</ul>
-			<li>dokidoki</li>
-		</ul>
+	<div id="fixed-bar">
+		<div class="folder bar_button">
+			<a href="javascript:void(0);" class="btn f_atag"  id="bar_folder">
+				<img src="https://storage.googleapis.com/zenn-user-upload/d952fdac3686-20230608.png" alt="folder_close" width="36px">
+			</a>
+		</div>
+		<div class="bar_button" id="export_button">
+			<a href="javascript:void(0);" class="btn">
+				<img src="https://storage.googleapis.com/zenn-user-upload/571593fb5604-20230608.png" alt="export_button" width="36px">
+			</a>
+		</div>
+	</div>
+	<div id="directory">
+		<div id="directory-listing"></div>
 	</div>
 	<div class="main_content">
 		<!-- HTML -->
 	</div>
-	<div class="export_button side_content">
-		<p>EXPORT TO PDF</p>
-		<a href="" class="btn">Export</a>
-	</div>
 </body>
 
+<script src="./script/directory.js"></script>
+<script src="./script/view.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script src="./script/mermaid.js"></script>
 </html>
