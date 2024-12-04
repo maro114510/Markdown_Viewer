@@ -1,6 +1,6 @@
 {
 	"devDependencies": {
-		"electron": "^32.0.1",
+		"electron": "^33.2.1",
 		"electron-builder": "^25.0.5",
 		"eslint": "^9.1.1",
 		"eslint-plugin-react": "^7.32.2",
